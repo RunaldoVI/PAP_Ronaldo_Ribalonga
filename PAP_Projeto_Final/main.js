@@ -10,42 +10,54 @@ sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
 
-const form = {
-    username: document.querySelector("UsernameID"),
-    password: document.querySelector("PasswordID"),
-    submit: document.querySelector("LoginBtn"),
-  };
-  let button = form.submit.addEventListener("click", (e) => {
-    e.preventDefault();
-    const login = "https://localhost:5001/api/auth/login/";
-  
-    fetch(login, {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: form.username.value,
-        password: form.password.value,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        // code here //
-        if (data.error) {
-          alert("Error Password or Username"); /*displays error message*/
-        } else {
-          window.open(
-            "target.html"
-          ); /*opens the target page while Id & password matches*/
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+const getBtn = document.getElementById('get-btn');
+const postBtn = document.getElementById('LoginBtn');
+
+const sendHttpRequest = (method, url, data) => {
+  const promise = new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+
+    xhr.responseType = 'json';
+
+    if (data) {
+      xhr.setRequestHeader('Content-Type', 'application/json');
+    }
+
+    xhr.onload = () => {
+      if (xhr.status >= 400) {
+        reject(xhr.response);
+      } else {
+        resolve(xhr.response);
+      }
+    };
+
+    xhr.onerror = () => {
+      reject('Something went wrong!');
+    };
+
+    xhr.send(JSON.stringify(data));
   });
+  return promise;
+};
 
-  document.getElementById("LoginBtn").addEventListener("click",button)
+const getData = () => {
+  sendHttpRequest('GET', 'https://reqres.in/api/users').then(responseData => {
+    console.log(responseData);
+  });
+};
 
+const sendData = () => {
+  sendHttpRequest('POST', 'https://localhost:5001/api/auth/login/', {
+    Username: 'Runaldo',
+    password: 'RunaldoPass'
+  })
+    .then(responseData => {
+      console.log(responseData);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+postBtn.addEventListener('click', sendData);
