@@ -27,7 +27,21 @@ namespace WebAPIV
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddCors(options =>
+            {
+                // definir e identificar a politica de CORS
+                // neste exemplo vamos aceitar todos os tipos de pedidos
+                options.AddPolicy("AllowBrowserApps",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin();
+                        policy.AllowAnyMethod();
+                        policy.AllowAnyHeader();
+                    });
+            });
+
+
+        services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIV", Version = "v1" });
@@ -43,6 +57,8 @@ namespace WebAPIV
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIV v1"));
             }
+
+            app.UseCors("AllowBrowserApps");
 
             app.UseHttpsRedirection();
 
