@@ -32,7 +32,7 @@ async function postData(url, data ) {
 
 formLogin.addEventListener('submit',(ev)=>{
   ev.preventDefault()
-  postData('https://localhost:5001/api/auth/login/', 
+  postData('https://localhost:5001/api/auth/login', 
   {
     username:usernameInputLogin.value,
     password:passwordInputLogin.value
