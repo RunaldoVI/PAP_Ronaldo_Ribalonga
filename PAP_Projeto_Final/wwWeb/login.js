@@ -2,6 +2,8 @@ const formLogin = document.getElementById("loginForm");
 const usernameInputLogin = document.getElementById("loginUsername");
 const passwordInputLogin = document.getElementById("loginPassword");
 
+
+
 // Example POST method implementation:
 async function postData(url, data) {
   // Default options are marked with *
@@ -22,7 +24,9 @@ formLogin.addEventListener("submit", (ev) => {
     username: usernameInputLogin.value,
     password: passwordInputLogin.value,
   }).then((data) => {
-   window.location.href = "renato.html";
+
+    window.location.href = "renato.html";
     console.log(data); // JSON data parsed by `data.json()` call
+
   });
 });
