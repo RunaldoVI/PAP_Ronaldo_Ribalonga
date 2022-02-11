@@ -37,7 +37,7 @@ namespace WebAPIV.Controllers
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-                var res = conn.Execute("Insert into Utilizadores values (@Username, @Nome, @Username, @Password)", user);
+                var res = conn.Execute("Insert into Utilizadores values (@Username, @Nome, @Username, @Password, @IsAdmin)", user);
                 return Ok(res);
             }
         }
