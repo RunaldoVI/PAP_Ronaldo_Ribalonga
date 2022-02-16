@@ -21,10 +21,10 @@ async function postData(url, data) {
 formRegisto.addEventListener("submit", (ev) => {
   ev.preventDefault();
   postData("https://localhost:5001/api/auth/signup", {
-    username: registoInputUsername.value,
-    password: registoInputPassword.value,
-    nome: registoInputNome.value,
-    email: registoInputEmail.value
+    Username: registoInputUsername.value,
+    Password: registoInputPassword.value,
+    Nome: registoInputNome.value,
+    Email: registoInputEmail.value
   }).then((data) => {
 
     console.log(data); // JSON data parsed by `data.json()` call

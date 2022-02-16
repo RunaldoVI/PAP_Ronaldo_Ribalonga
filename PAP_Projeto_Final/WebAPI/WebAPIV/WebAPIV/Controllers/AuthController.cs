@@ -22,7 +22,7 @@ namespace WebAPIV.Controllers
         {
             using(var conn = new SqlConnection(Strings.connectionString))
             {
-                var res = conn.QueryFirstOrDefault("Select UserID, Username, Nome, Username from Utilizadores where Username=@username and Password=@password",user);
+                var res = conn.QueryFirstOrDefault("Select UserID, Username, Nome, Username from Utilizadores where Username=@Username and Password=@Password",user);
                 if(res==null)
                 {
                     return NotFound();
@@ -37,8 +37,8 @@ namespace WebAPIV.Controllers
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-                var res = conn.Execute("Insert into Utilizadores values (@Username, @Nome, @Username, @Password, @IsAdmin)", user);
-                return Ok(res);
+                var res = conn.Execute("Insert into Utilizadores values (@Username, @Nome, @Email, @Password, @IsAdmin)", user);
+                 return Ok(res);
             }
         }
     }

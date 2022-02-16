@@ -21,12 +21,9 @@ async function postData(url, data) {
 formLogin.addEventListener("submit", (ev) => {
   ev.preventDefault();
   postData("https://localhost:5001/api/auth/login", {
-    username: usernameInputLogin.value,
-    password: passwordInputLogin.value,
+    Username: usernameInputLogin.value,
+    Password: passwordInputLogin.value,
   }).then((data) => {
-
-    window.location.href = "renato.html";
-    console.log(data); // JSON data parsed by `data.json()` call
-
+         
   });
 });
