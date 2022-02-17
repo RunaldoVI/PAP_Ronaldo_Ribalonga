@@ -22,7 +22,7 @@ namespace WebAPIV.Controllers
         {
             using(var conn = new SqlConnection(Strings.connectionString))
             {
-                var res = conn.QueryFirstOrDefault("Select UserID, Username, Nome, Username from Utilizadores where Username=@Username and Password=@Password",user);
+                var res = conn.QueryFirstOrDefault("Select UserID, Username, Nome, Email from Utilizadores where Username=@Username and Password=@Password",user);
                 if(res==null)
                 {
                     return NotFound();

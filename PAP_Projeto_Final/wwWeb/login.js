@@ -14,9 +14,11 @@ async function postData(url, data) {
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
+  }).then(){
+   
 }
+
+
 
 formLogin.addEventListener("submit", (ev) => {
   ev.preventDefault();
@@ -24,6 +26,24 @@ formLogin.addEventListener("submit", (ev) => {
     Username: usernameInputLogin.value,
     Password: passwordInputLogin.value,
   }).then((data) => {
+            
+    console.log(data)
+    window.open("http://www.google.com")
+
          
   });
 });
+
+
+/*
+if(response.status == 404)
+{
+  console.log("User ou Password Incorretos")
+}
+else if(response.status == 200){
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+else{
+  console.log("Erro")
+}
+*/
