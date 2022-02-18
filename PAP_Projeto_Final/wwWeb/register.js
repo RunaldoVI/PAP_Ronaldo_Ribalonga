@@ -15,6 +15,7 @@ async function postData(url, data) {
     },
     body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
+  
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
@@ -26,7 +27,6 @@ formRegisto.addEventListener("submit", (ev) => {
     Nome: registoInputNome.value,
     Email: registoInputEmail.value
   }).then((data) => {
-
     console.log(data); // JSON data parsed by `data.json()` call
   });
 });

@@ -367,4 +367,10 @@ form.sign-in-form {
     bottom: 28%;
     left: 50%;
   }
+  .popuptext {
+    display: none;
+  }
+  .popuptext.show {
+    display: block;
+  }
 }

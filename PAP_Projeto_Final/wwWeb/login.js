@@ -2,9 +2,7 @@ const formLogin = document.getElementById("loginForm");
 const usernameInputLogin = document.getElementById("loginUsername");
 const passwordInputLogin = document.getElementById("loginPassword");
 
-
-
-// Example POST method implementation:
+//Example POST method implementation:
 async function postData(url, data) {
   // Default options are marked with *
   const response = await fetch(url, {
@@ -14,25 +12,35 @@ async function postData(url, data) {
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify(data), // body data type must match "Content-Type" header
-  }).then(){
-   
+  });
+  return response.json();
 }
-
 
 
 formLogin.addEventListener("submit", (ev) => {
   ev.preventDefault();
-  postData("https://localhost:5001/api/auth/login", {
-    Username: usernameInputLogin.value,
-    Password: passwordInputLogin.value,
-  }).then((data) => {
-            
-    console.log(data)
-    window.open("http://www.google.com")
+    postData("https://localhost:5001/api/auth/login", {
+      Username: usernameInputLogin.value,
+      Password: passwordInputLogin.value,
+    }
+    ).then((data) => {
+      
+      console.log(data);
 
-         
-  });
+      if(data.status === 404)
+      {
+        alert("Password Ou User Incorreto");
+      }
+      else
+      {
+        alert("Bem-Vindo De Volta " + usernameInputLogin.value)
+        window.location.replace('renato.html')             
+      }
+           
+    });
 });
+
+
 
 
 /*
