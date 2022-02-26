@@ -196,12 +196,13 @@ form.sign-in-form {
   font-size: 0.8rem;
 }
 
+/* Começa a animação e ajustes */
 .right-panel .image,
 .right-panel .content {
   transform: translateX(800px);
 }
 
-/* ANIMATION */
+
 
 .container.sign-up-mode:before {
   transform: translate(100%, -50%);
@@ -239,6 +240,8 @@ form.sign-in-form {
 .container.sign-up-mode .right-panel {
   pointer-events: all;
 }
+
+/* Acaba a animação */
 
 @media (max-width: 870px) {
   .container {

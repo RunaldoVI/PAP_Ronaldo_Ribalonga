@@ -11,9 +11,11 @@
     />    
   </head>
   <body>
-    <div class="container">
+    <div class="container"> <!-- Container -->
       <div class="forms-container">
-        <div class="signin-signup">
+        <div class="signin-signup"> <!-- Login E Registo Div --> 
+
+          <!-- Login Form -->
           <form action="#" id="loginForm" class="sign-in-form">
             <h2 class="title">Login</h2>
             <div class="input-field">
@@ -26,6 +28,9 @@
             </div>
             <input type="submit" value="Login" id="LoginBtn" class="btn solid"/>
           </form>
+          <!-- Login Form -->
+
+          <!-- Registo Form -->
           <form action="#" id="registoForm" class="sign-up-form">
             <h2 class="title">Registo</h2>
             <div class="input-field">
@@ -45,11 +50,15 @@
               <input type="password" id="registoPassword" placeholder="Password" required />
             </div>
             <input type="submit" class="btn" value="Registo" />
-          </form>
-        </div>
-      </div>
+          </form>  
+          <!-- Registo Form -->
 
-      <div class="panels-container">
+        </div>  <!-- Login E Registo Div -->
+      </div> <!-- Form Container -->
+
+      <!-- Painel de controlo total Div -->
+    <div class="panels-container"> 
+      <!-- Painel de controlo Esquerdo/Registo Div -->
         <div class="panel left-panel">
           <div class="content">
             <h3>Olá Amigo!</h3>
@@ -58,6 +67,9 @@
           </div>
           <img src="img/bg.png" class="image" alt="" />
         </div>
+        <!-- Painel de controlo Esquerdo/Registo Div -->
+
+        <!-- Painel de controlo direita/Registo Div -->
         <div class="panel right-panel">
           <div class="content">
             <h3>Parte da familia?</h3>
@@ -66,9 +78,17 @@
           </div>
           <img src="img/bg.png" class="image" alt="" />
         </div>
+<<<<<<< Updated upstream
       </div>     
       </div>
     </div>
+=======
+        <!-- Painel de controlo direita/Registo Div -->
+      </div>  
+      <!-- Painel de controlo total Div -->
+
+      </div><!-- Container -->
+>>>>>>> Stashed changes
     <script>
       const sign_in_btn = document.querySelector("#sign-in-btn");
       const sign_up_btn = document.querySelector("#sign-up-btn");
