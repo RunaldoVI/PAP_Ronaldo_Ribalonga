@@ -1,6 +1,7 @@
 const formLogin = document.getElementById("loginForm");
 const usernameInputLogin = document.getElementById("loginUsername");
 const passwordInputLogin = document.getElementById("loginPassword");
+const PopUpContainer = document.getElementById('PopUp-container');
 
 //Example POST method implementation:
 async function postData(url, data) {
@@ -28,30 +29,44 @@ formLogin.addEventListener("submit", (ev) => {
       console.log(data);
 
       if(data.status === 404)
-      {
-        alert("Password Ou User Incorreto");
+      { 
+       ValidationPopUp('error', '<i class="fas fa-exclamation-circle"></i> <b>Password Ou Username Errados!</b>', 2000);
+
       }
       else
       {
-        alert("Bem-Vindo De Volta " + usernameInputLogin.value)
-        window.location.replace('renato.html')             
-      }
-           
+        ValidationPopUp('success', `
+
+         <i class="fas fa-check-circle"></i>
+         <b>Login Bem Sucedido</b> 
+         <p></p> 
+         <b> Bem Vindo de Volta ${usernameInputLogin.value} </b>`, 2000);  
+         
+        setTimeout(() => {       
+          window.location.replace('renato.html');             
+        }, 2000);
+        
+      }          
     });
 });
 
+function ValidationPopUp(type, msg, time){
+  const para = document.createElement('P');
+  para.classList.add('snackbar');
+  para.innerHTML = `${msg}`;
 
+  if(type === 'error'){
+      para.classList.add('error');
+  }
+  else if(type ==='success'){
+      para.classList.add('success');
+  }
 
+  PopUpContainer.appendChild(para);
+  para.classList.add('fadeout');
 
-/*
-if(response.status == 404)
-{
-  console.log("User ou Password Incorretos")
+  setTimeout(()=>{
+          PopUpContainer.removeChild(para)
+  }, time)
+
 }
-else if(response.status == 200){
-  return response.json(); // parses JSON response into native JavaScript objects
-}
-else{
-  console.log("Erro")
-}
-*/

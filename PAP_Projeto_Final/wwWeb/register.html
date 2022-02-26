@@ -4,15 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="Register.css" />
+    <link rel="stylesheet" href="message.css"/>
     <title>Registo&Login</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />    
+    />  
   </head>
   <body>
     <div class="container"> <!-- Container -->
       <div class="forms-container">
+        <section id="PopUp-container">
+        </section>
         <div class="signin-signup"> <!-- Login E Registo Div --> 
 
           <!-- Login Form -->
@@ -49,7 +52,7 @@
               <i class="fas fa-lock"></i>
               <input type="password" id="registoPassword" placeholder="Password" required />
             </div>
-            <input type="submit" class="btn" value="Registo" />
+            <input type="submit" class="btn" value="Registo" id="registo" />
           </form>  
           <!-- Registo Form -->
 
@@ -78,17 +81,11 @@
           </div>
           <img src="img/bg.png" class="image" alt="" />
         </div>
-<<<<<<< Updated upstream
+        <!-- Painel de controlo direita/Registo Div -->
+
       </div>     
       </div>
     </div>
-=======
-        <!-- Painel de controlo direita/Registo Div -->
-      </div>  
-      <!-- Painel de controlo total Div -->
-
-      </div><!-- Container -->
->>>>>>> Stashed changes
     <script>
       const sign_in_btn = document.querySelector("#sign-in-btn");
       const sign_up_btn = document.querySelector("#sign-up-btn");
