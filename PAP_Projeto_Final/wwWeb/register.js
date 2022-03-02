@@ -34,6 +34,11 @@ formRegisto.addEventListener("submit", (ev) => {
       
 
       ValidationPopUp('error', '<i class="fas fa-exclamation-circle"></i> <b>Username,Nome Ou Email já está em uso!</b>', 2000);
+      registoInputEmail.value = "";
+      registoInputNome.value = "";
+      registoInputUsername.value = "";
+      registoInputPassword.value = "";
+      
 
     }
     else{
@@ -45,7 +50,7 @@ formRegisto.addEventListener("submit", (ev) => {
          <b> Bem Vindo ${registoInputUsername.value} </b>`, 2000);
          setTimeout(() => {       
           contain.classList.remove("sign-up-mode");            
-        }, 2000);          
+        }, 1800);          
           
     }
   });
