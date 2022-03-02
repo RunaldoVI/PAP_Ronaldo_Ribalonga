@@ -32,6 +32,8 @@ formLogin.addEventListener("submit", (ev) => {
       if(data.status === 404)
       { 
        ValidationPopUp('error', '<i class="fas fa-exclamation-circle"></i> <b>Password Ou Username Errados!</b>', 2000);
+       usernameInputLogin.value = "";
+       passwordInputLogin.value = "";
        
       }
       else
@@ -59,7 +61,7 @@ function ValidationPopUp(type, msg, time){
   if(type === 'error'){
       para.classList.add('error');
   }
-  else if(type ==='success'){
+  else if(type === 'success' ){
       para.classList.add('success');
   }
 

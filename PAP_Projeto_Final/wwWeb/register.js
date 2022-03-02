@@ -5,6 +5,16 @@ const registoInputNome = document.getElementById("registoNome");
 const registoInputEmail = document.getElementById("registoEmail");
 const contain = document.querySelector(".container");
 
+function clear() {
+
+  registoInputEmail.value = "";
+  registoInputNome.value = "";
+  registoInputUsername.value = "";
+  registoInputPassword.value = "";
+
+}
+
+
 // Example POST method implementation:
 async function postData(url, data) {
   // Default options are marked with *
@@ -34,10 +44,7 @@ formRegisto.addEventListener("submit", (ev) => {
       
 
       ValidationPopUp('error', '<i class="fas fa-exclamation-circle"></i> <b>Username,Nome Ou Email já está em uso!</b>', 2000);
-      registoInputEmail.value = "";
-      registoInputNome.value = "";
-      registoInputUsername.value = "";
-      registoInputPassword.value = "";
+      clear();
       
 
     }
@@ -49,8 +56,11 @@ formRegisto.addEventListener("submit", (ev) => {
          <p></p> 
          <b> Bem Vindo ${registoInputUsername.value} </b>`, 2000);
          setTimeout(() => {       
-          contain.classList.remove("sign-up-mode");            
+          contain.classList.remove("sign-up-mode");      
         }, 1800);          
+         setTimeout(() => {
+          clear();
+         }, 2800);
           
     }
   });
