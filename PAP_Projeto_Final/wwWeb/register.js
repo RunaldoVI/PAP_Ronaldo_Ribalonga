@@ -3,6 +3,7 @@ const registoInputUsername = document.getElementById("registoUsername");
 const registoInputPassword = document.getElementById("registoPassword");
 const registoInputNome = document.getElementById("registoNome");
 const registoInputEmail = document.getElementById("registoEmail");
+const contain = document.querySelector(".container");
 
 // Example POST method implementation:
 async function postData(url, data) {
@@ -26,6 +27,26 @@ formRegisto.addEventListener("submit", (ev) => {
     Nome: registoInputNome.value,
     Email: registoInputEmail.value
   }).then((data) => {
-    console.log(data); // JSON data parsed by `data.json()` call
+    console.log(data);
+    
+    if(data.status === 404)
+    {
+      
+
+      ValidationPopUp('error', '<i class="fas fa-exclamation-circle"></i> <b>Username,Nome Ou Email já está em uso!</b>', 2000);
+
+    }
+    else{
+      ValidationPopUp('success', `
+
+         <i class="fas fa-check-circle"></i>
+         <b>Registo Bem Sucedido</b> 
+         <p></p> 
+         <b> Bem Vindo ${registoInputUsername.value} </b>`, 2000);
+         setTimeout(() => {       
+          contain.classList.remove("sign-up-mode");            
+        }, 2000);          
+          
+    }
   });
 });

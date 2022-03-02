@@ -3,6 +3,7 @@ const usernameInputLogin = document.getElementById("loginUsername");
 const passwordInputLogin = document.getElementById("loginPassword");
 const PopUpContainer = document.getElementById('PopUp-container');
 
+
 //Example POST method implementation:
 async function postData(url, data) {
   // Default options are marked with *

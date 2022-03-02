@@ -39,20 +39,16 @@ namespace WebAPIV.Controllers
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-                var verify = conn.QueryFirstOrDefault<int>("Select count(*) from Utilizadores where Email=@Email ", new {Email=user.Email});
-                if(verify >= 1)
+                var verify = conn.QueryFirstOrDefault("Select * from Utilizadores where Username=@Username or Nome=@Nome or Email=@Email ", user);
+                if(verify != null)
                 {
 
-                    return BadRequest(verify);
+                    return NotFound();
 
                 }
-                else
-                {
-
-                var res = conn.Execute("Insert into Utilizadores values (@Username, @Nome, @Email, @Password, @IsAdmin)", user);
-                return Ok( res);
-
-                }
+               
+              var res = conn.Execute("Insert into Utilizadores values (@Username, @Nome, @Password, @Email, @IsAdmin)", user);
+              return Ok( res);
             }
         }
     }
