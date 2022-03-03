@@ -65,7 +65,7 @@ formLogin.addEventListener("submit", (ev) => {
          <p></p> 
          <b> Bem Vindo de Volta ${usernameInputLogin.value} </b>`, 2000);  
         setTimeout(() => {       
-          window.location.replace('renato.html');             
+          window.location.replace('Site.html');             
         }, 2000);
         
       }          
