@@ -2,6 +2,24 @@ const formLogin = document.getElementById("loginForm");
 const usernameInputLogin = document.getElementById("loginUsername");
 const passwordInputLogin = document.getElementById("loginPassword");
 const PopUpContainer = document.getElementById('PopUp-container');
+const loginUser = document.getElementById("loginUser");
+const loginPass = document.getElementById("loginPass");
+
+
+function colorReed() {
+
+  loginUser.style.borderColor = "#e40c3e";
+  loginPass.style.borderColor = "#e40c3e";
+  
+}
+
+function colorGreeen() {
+
+  loginUser.style.borderColor = "#38d39f";
+  loginPass.style.borderColor = "#38d39f";
+
+}
+
 
 
 //Example POST method implementation:
@@ -32,19 +50,20 @@ formLogin.addEventListener("submit", (ev) => {
       if(data.status === 404)
       { 
        ValidationPopUp('error', '<i class="fas fa-exclamation-circle"></i> <b>Password Ou Username Errados!</b>', 2000);
+       colorReed();
        usernameInputLogin.value = "";
        passwordInputLogin.value = "";
        
       }
       else
       {
+        colorGreeen();
         ValidationPopUp('success', `
 
          <i class="fas fa-check-circle"></i>
          <b>Login Bem Sucedido</b> 
          <p></p> 
          <b> Bem Vindo de Volta ${usernameInputLogin.value} </b>`, 2000);  
-         
         setTimeout(() => {       
           window.location.replace('renato.html');             
         }, 2000);

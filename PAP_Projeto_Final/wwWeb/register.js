@@ -4,6 +4,10 @@ const registoInputPassword = document.getElementById("registoPassword");
 const registoInputNome = document.getElementById("registoNome");
 const registoInputEmail = document.getElementById("registoEmail");
 const contain = document.querySelector(".container");
+const registoUser = document.getElementById("registoUserna");
+const registoNom = document.getElementById("registoNom");
+const registoEma = document.getElementById("registoEma");
+const registoPass = document.getElementById("registoPass");
 
 function clear() {
 
@@ -13,7 +17,32 @@ function clear() {
   registoInputPassword.value = "";
 
 }
+function colorRed() {
 
+  registoUser.style.borderColor = "#e40c3e";
+  registoNom.style.borderColor = "#e40c3e";
+  registoEma.style.borderColor = "#e40c3e";
+  registoPass.style.borderColor = "#e40c3e";
+  
+}
+
+function colorGreen() {
+
+  registoUser.style.borderColor = "#38d39f";
+  registoNom.style.borderColor = "#38d39f";
+  registoEma.style.borderColor = "#38d39f";
+  registoPass.style.borderColor = "#38d39f";
+
+}
+
+function clearColor() {
+
+  registoUser.style.borderColor = "#CCC";
+  registoNom.style.borderColor = "#CCC";
+  registoEma.style.borderColor = "#CCC";
+  registoPass.style.borderColor = "#CCC";
+
+}
 
 // Example POST method implementation:
 async function postData(url, data) {
@@ -44,6 +73,7 @@ formRegisto.addEventListener("submit", (ev) => {
       
 
       ValidationPopUp('error', '<i class="fas fa-exclamation-circle"></i> <b>Username,Nome Ou Email já está em uso!</b>', 2000);
+      colorRed();
       clear();
       
 
@@ -55,11 +85,13 @@ formRegisto.addEventListener("submit", (ev) => {
          <b>Registo Bem Sucedido</b> 
          <p></p> 
          <b> Bem Vindo ${registoInputUsername.value} </b>`, 2000);
+         colorGreen();
          setTimeout(() => {       
           contain.classList.remove("sign-up-mode");      
         }, 1800);          
          setTimeout(() => {
           clear();
+          clearColor();
          }, 2800);
           
     }
