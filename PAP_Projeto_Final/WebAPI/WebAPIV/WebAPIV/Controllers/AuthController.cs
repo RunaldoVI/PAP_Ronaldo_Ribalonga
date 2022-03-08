@@ -15,7 +15,23 @@ namespace WebAPIV.Controllers
 
         
 
-        
+        [HttpGet("Perguntas")]
+        public IActionResult Perguntas()
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+               var re = conn.QueryFirstOrDefault("Select * from Perguntas");
+                
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+               return 
+                
+            }
+
+        }
 
         // GET: api/<AuthController>/Login
         [HttpPost("login")]
@@ -48,7 +64,7 @@ namespace WebAPIV.Controllers
                 }
                
               var res = conn.Execute("Insert into Utilizadores values (@Username, @Nome, @Password, @Email, @IsAdmin)", user);
-              return Ok( res);
+              return Ok(res);
             }
         }
     }
