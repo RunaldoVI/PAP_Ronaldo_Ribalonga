@@ -1,3 +1,5 @@
+
+
 //selecting all required elements
 const start_btn = document.querySelector(".start_btn button");
 const info_box = document.querySelector(".info_box");
@@ -10,12 +12,39 @@ const time_line = document.querySelector("header .time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
 // if startQuiz button clicked
+
+async function postPerguntas(url, data) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json();
+  }
+
+  postPerguntas("https://localhost:5001/api/Auth/Perguntas", {
+      perguntasID: questions = 2
+    }
+    ).then((data) => {
+
+      console.log(data);
+
+    });
+
+
 start_btn.onclick = ()=>{
-    info_box.classList.add("activeInfo"); //show info box
+    info_box.classList.add("activeInfo");
+
 }
 // if exitQuiz button clicked
 exit_btn.onclick = ()=>{
-    info_box.classList.remove("activeInfo"); //hide info box
+
+    info_box.classList.remove("activeInfo");
+     //hide info box
 }
 // if continueQuiz button clicked
 continue_btn.onclick = ()=>{

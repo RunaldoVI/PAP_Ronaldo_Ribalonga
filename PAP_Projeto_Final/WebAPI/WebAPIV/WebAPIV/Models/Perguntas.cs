@@ -4,7 +4,5 @@
     {
         public int PerguntasID { get; set; }
 
-
-
     }
 }
