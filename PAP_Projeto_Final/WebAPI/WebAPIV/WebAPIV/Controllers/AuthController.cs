@@ -8,6 +8,7 @@ using WebAPIV.Models;
 
 namespace WebAPIV.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
