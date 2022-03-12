@@ -61,9 +61,7 @@ formLogin.addEventListener("submit", (ev) => {
         ValidationPopUp('success', `
 
          <i class="fas fa-check-circle"></i>
-         <b>Login Bem Sucedido</b> 
-         <p></p> 
-         <b> Bem Vindo de Volta ${usernameInputLogin.value} </b>`, 2000);  
+         <b>Login Bem Sucedido Bem Vindo de Volta ${usernameInputLogin.value} </b>`, 2000);  
         setTimeout(() => {       
           window.location.replace('..\\Home\\Site.html');             
         }, 2000);

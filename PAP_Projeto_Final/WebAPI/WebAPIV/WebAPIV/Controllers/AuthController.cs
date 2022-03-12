@@ -16,12 +16,12 @@ namespace WebAPIV.Controllers
 
         
 
-        [HttpPost("Perguntas")]
-        public IActionResult Perguntas([FromBody] Perguntas perguntas)
+        [HttpGet("Perguntas")]
+        public IActionResult Perguntas()
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-               var re = conn.QueryFirstOrDefault("Select * from Perguntas where PerguntasID=@PerguntasID",perguntas);
+               var re = conn.Query("Select * from Perguntas");
                 
                 if (re == null)
                 {
