@@ -128,17 +128,22 @@ quit_quiz.onclick = ()=>{
     window.location.reload(); //reload the current window
 }
 const next_btn = document.querySelector("footer .next_btn");
+const finish_btn = document.querySelector("footer .finish_btn");
 
 // if Next Que button clicked
 next_btn.onclick = ()=>{
-    if(nquestao < 32 - 1){
+    if(nquestao <= 32 - 1){
         ines++; //if question count is less than total question length~
         nquestao++;
         valor++;
         showQuetions(); //calling showQestions function
-        next_btn.classList.remove("show"); //hide the next button
-    }else{
+        next_btn.classList.remove("show")
+       
     }
+}
+
+finish_btn.onclick = ()=>{
+  window.location.href = "../Home/Site.html"
 }
 // getting questions and options from array
 function showQuetions(){
@@ -152,15 +157,15 @@ function showQuetions(){
 let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
 let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
 
-function optionSelected(answer){
-    let userAns = answer.textContent; //getting user selected option
+function optionSelected(){
+    let userAns = document.querySelector(".option"); //getting user selected option
     const allOptions = option_list.children.length; //getting all option items
     
-   
+        
         console.log(userAns)
-        console.log(allOptions)
+        //console.log(allOptions)
            
-            answer.insertAdjacentHTML("beforeend", tickIconTag);
+            //answer.insertAdjacentHTML("beforeend", tickIconTag);
 
         
         //answer.classList.add("correct"); //adding green color to correct selected option
@@ -172,5 +177,12 @@ function optionSelected(answer){
     for(i=0; i < allOptions; i++){
         //option_list.children[i].classList.add() //once user select an option then disabled all options
     }
-    next_btn.classList.add("show"); //show the next button if user selected any option
+    if(nquestao !== 32)
+    {
+      next_btn.classList.add("show");;
+       //show the next button if user selected any option
+    }
+    else{
+      finish_btn.classList.add("show");
+    }
 }

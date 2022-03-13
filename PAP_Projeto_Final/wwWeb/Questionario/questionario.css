@@ -246,6 +246,7 @@ footer .total_que span p:first-child{
     padding-left: 0px;
 }
 footer button{
+    padding-right: 1px;
     height: 40px;
     padding: 0 13px;
     font-size: 18px;
