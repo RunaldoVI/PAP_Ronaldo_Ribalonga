@@ -2,7 +2,7 @@
 {
     public class Perguntas
     {
-        public int PerguntasID { get; set; }
+        public int QuestionarioID { get; set; }
 
     }
 }

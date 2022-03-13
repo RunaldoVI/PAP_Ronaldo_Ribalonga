@@ -10,36 +10,92 @@ const time_line = document.querySelector("header .time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
 // if startQuiz button clicked
+var ines = 0;
+var nquestao = 1;
+var valor = 1;
 
-
-
-async function getPerguntas(url) {
+async function postRespostas(urlRespostas,dataRespostas) {
     // Default options are marked with *
-    const response = await fetch(url, {
-      method: "GET", // *GET, POST, PUT, DELETE, etc.
+    const response = await fetch(urlRespostas, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
+      body: JSON.stringify(dataRespostas),
     });
     return response.json();
   }
-  var ines = 0;
-  function perguntass(){
 
-    getPerguntas("https://localhost:5001/api/Auth/Perguntas", {
+
+async function postPerguntas(urlPerguntas,dataPerguntas) {
+    // Default options are marked with *
+    const response = await fetch(urlPerguntas, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(dataPerguntas),
+    });
+    return response.json();
+  }
+
+  function respostas(){
+    postRespostas("https://localhost:5001/api/Auth/Respostas", {
+
+        perguntasID:valor
+
     }
-    ).then((data) => {
+    ).then((dataRespostas) => {
+       
+      console.log(dataRespostas[0]);
+
+      var respostas1 = dataRespostas[0];
+      var respostas2 = dataRespostas[1];
+      var respostas3 = dataRespostas[2];
+      var respostas4 = dataRespostas[3];
+      var respostas5 = dataRespostas[4];
+
+      let options = '<div class="option"><span>'+ respostas1["Valor"] +'</span></div>'
+      + '<div class="option"><span>'+ respostas2["Valor"] +'</span></div>'
+      + '<div class="option"><span>'+ respostas3["Valor"] +'</span></div>'
+      + '<div class="option"><span>'+ respostas4["Valor"] +'</span></div>'
+      + '<div class="option"><span>'+ respostas5["Valor"] +'</span></div>';
+      option_list.innerHTML = options; //adding new div tag inside option_tag
+      
+      const option = option_list.querySelectorAll(".option");
+      // set onclick attribute to all available options
+      for(i=0; i < option.length; i++){
+          option[i].setAttribute("onclick", "optionSelected(this)");
+      }
+
+    });
+  }
+
+
+  function perguntas(){
+
+    postPerguntas("https://localhost:5001/api/Auth/Perguntas", {
+
+        QuestionarioID:1
+    }
+    ).then((dataPerguntas) => {
        
         
-       dat = data[ines] 
+       dat = dataPerguntas[ines] 
        const que = document.querySelector(".que_text");
-       que.innerHTML = '<span> '  + dat["Descricao"] +'</span>';
-       console.log(dat);
-       console.log(data)
+       que.innerHTML = '<span>'+ dat["Descricao"] +'</span>';
+       //console.log(dat);
+       //console.log(dataPerguntas)
+
+       const numeroPerguntas = document.querySelector("footer .total_que");
+       let totalQueCounTag = '<span><p>'+ nquestao +'</p> of <p>'+ dataPerguntas.length +'</p> Questions</span>';
+       numeroPerguntas.innerHTML = totalQueCounTag;  
         
     });
 }
+
 
 
 start_btn.onclick = ()=>{
@@ -57,31 +113,14 @@ continue_btn.onclick = ()=>{
     info_box.classList.remove("activeInfo"); //hide info box
     quiz_box.classList.add("activeQuiz"); //show quiz box
     showQuetions(0); //calling showQestions function
-    queCounter(1); //passing 1 parameter to queCounter
 }
-let timeValue =  14324324325;
-let que_count = 0;
-let que_numb = 1;
-let userScore = 0;
-let counter;
-let counterLine;
-let widthValue = 0;
 const restart_quiz = result_box.querySelector(".buttons .restart");
 const quit_quiz = result_box.querySelector(".buttons .quit");
 // if restartQuiz button clicked
 restart_quiz.onclick = ()=>{
     quiz_box.classList.add("activeQuiz"); //show quiz box
     result_box.classList.remove("activeResult"); //hide result box
-    timeValue = 14324324325; 
-    que_count = 0;
-    que_numb = 1;
-    userScore = 0;
-    widthValue = 0;
-    showQuetions(que_count); //calling showQestions function
-    queCounter(que_numb); //passing que_numb value to queCounter
-    clearInterval(counter); //clear counter
-    clearInterval(counterLine); //clear counterLine
-    timeText.textContent = "Time Left"; //change the text of timeText to Time Left
+    showQuetions(); //calling showQestions function
     next_btn.classList.remove("show"); //hide the next button
 }
 // if quitQuiz button clicked
@@ -89,80 +128,49 @@ quit_quiz.onclick = ()=>{
     window.location.reload(); //reload the current window
 }
 const next_btn = document.querySelector("footer .next_btn");
-const bottom_ques_counter = document.querySelector("footer .total_que");
+
 // if Next Que button clicked
 next_btn.onclick = ()=>{
-    if(que_count < questions.length - 1){
-        ines = ines + 1; //if question count is less than total question length
-        que_count++; //increment the que_count value
-        que_numb++; //increment the que_numb value
-        showQuetions(que_count); //calling showQestions function
-        queCounter(que_numb); //passing que_numb value to queCounter
-        clearInterval(counter); //clear counter
-        clearInterval(counterLine); //clear counterLine
-        timeText.textContent = "Time Left"; //change the timeText to Time Left
+    if(nquestao < 32 - 1){
+        ines++; //if question count is less than total question length~
+        nquestao++;
+        valor++;
+        showQuetions(); //calling showQestions function
         next_btn.classList.remove("show"); //hide the next button
     }else{
-        clearInterval(counter); //clear counter
-        clearInterval(counterLine); //clear counterLine
     }
 }
 // getting questions and options from array
-function showQuetions(index){
+function showQuetions(){
     const que_text = document.querySelector(".que_text");
-    //creating a new span and div tag for question and option and passing the value using array index
-   // let que_tag = '<span>'+ questions[index].numb + ". " + questions[index].question +'</span>';
-    let option_tag = '<div class="option"><span>'+ questions[index].options[0] +'</span></div>'
-    + '<div class="option"><span>'+ questions[index].options[1] +'</span></div>'
-    + '<div class="option"><span>'+ questions[index].options[2] +'</span></div>'
-    + '<div class="option"><span>'+ questions[index].options[3] +'</span></div>';
-    que_text.innerHTML = perguntass(); //adding new span tag inside que_tag
-    option_list.innerHTML = option_tag; //adding new div tag inside option_tag
-    
+    que_text.innerHTML = perguntas();  
     const option = option_list.querySelectorAll(".option");
-    // set onclick attribute to all available options
-    for(i=0; i < option.length; i++){
-        option[i].setAttribute("onclick", "optionSelected(this)");
-    }
+    option.innerHTML = respostas();
+
 }
 // IMPORTANTE É O QUE FAZ PASSAR PERGUNTA DE PERGUNTA
 let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
 let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
-//if user clicked on option
+
 function optionSelected(answer){
-    clearInterval(counter); //clear counter
-    clearInterval(counterLine); //clear counterLine
     let userAns = answer.textContent; //getting user selected option
-    let correcAns = questions[que_count].answer; //getting correct answer from array
     const allOptions = option_list.children.length; //getting all option items
     
-    if(userAns == correcAns){ //if user selected option is equal to array's correct answer
-        userScore += 1; //upgrading score value with 1
-        answer.classList.add("correct"); //adding green color to correct selected option
-        answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
-        console.log("Correct Answer");
-        console.log("Your correct answers = " + userScore);
-    }else{
-        answer.classList.add("incorrect"); //adding red color to correct selected option
-        answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
-        console.log("Wrong Answer");
-        for(i=0; i < allOptions; i++){
-            if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer 
-                option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-                option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
-                console.log("Auto selected correct answer.");
-            }
-        }
-    }
+   
+        console.log(userAns)
+        console.log(allOptions)
+           
+            answer.insertAdjacentHTML("beforeend", tickIconTag);
+
+        
+        //answer.classList.add("correct"); //adding green color to correct selected option
+         //adding tick icon to correct selected option
+  
+       // answer.classList.add("incorrect"); //adding red color to correct selected option
+        //answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
+    
     for(i=0; i < allOptions; i++){
-        option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+        //option_list.children[i].classList.add() //once user select an option then disabled all options
     }
     next_btn.classList.add("show"); //show the next button if user selected any option
-}
-
-//Mostra o numero de perguntas
-function queCounter(index){
-    //creating a new span tag and passing the question number and total question
-    let totalQueCounTag = '<span><p>'+ index +'</p> of <p>'+ questions.length +'</p> Questions</span>';
-    bottom_ques_counter.innerHTML = totalQueCounTag;  //adding new span tag inside bottom_ques_counter
 }

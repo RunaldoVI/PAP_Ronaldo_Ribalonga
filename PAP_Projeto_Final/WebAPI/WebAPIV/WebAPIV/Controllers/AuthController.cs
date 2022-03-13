@@ -14,14 +14,30 @@ namespace WebAPIV.Controllers
     public class AuthController : ControllerBase
     {
 
-        
-
-        [HttpGet("Perguntas")]
-        public IActionResult Perguntas()
+        [HttpPost("Respostas")]
+        public IActionResult Respostas([FromBody] Respostas respostas)
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-               var re = conn.Query("Select * from Perguntas");
+                var re = conn.Query("Select * from Respostas where PerguntasID = @PerguntasID", respostas);
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+
+        }
+
+        [HttpPost("Perguntas")]
+        public IActionResult Perguntas([FromBody]Perguntas perguntas)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+               var re = conn.Query("Select * from Perguntas where QuestionarioID = @QuestionarioID",perguntas);
                 
                 if (re == null)
                 {
