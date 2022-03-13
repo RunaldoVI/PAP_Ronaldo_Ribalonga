@@ -6,9 +6,6 @@ const continue_btn = info_box.querySelector(".buttons .restart");
 const quiz_box = document.querySelector(".quiz_box");
 const result_box = document.querySelector(".result_box");
 const option_list = document.querySelector(".option_list");
-const time_line = document.querySelector("header .time_line");
-const timeText = document.querySelector(".timer .time_left_txt");
-const timeCount = document.querySelector(".timer .timer_sec");
 // if startQuiz button clicked
 var ines = 0;
 var nquestao = 1;
@@ -49,24 +46,34 @@ async function postPerguntas(urlPerguntas,dataPerguntas) {
     }
     ).then((dataRespostas) => {
        
-      console.log(dataRespostas[0]);
+     
 
       var respostas1 = dataRespostas[0];
       var respostas2 = dataRespostas[1];
       var respostas3 = dataRespostas[2];
       var respostas4 = dataRespostas[3];
       var respostas5 = dataRespostas[4];
-
-      let options = '<div class="option"><span>'+ respostas1["Valor"] +'</span></div>'
-      + '<div class="option"><span>'+ respostas2["Valor"] +'</span></div>'
-      + '<div class="option"><span>'+ respostas3["Valor"] +'</span></div>'
-      + '<div class="option"><span>'+ respostas4["Valor"] +'</span></div>'
-      + '<div class="option"><span>'+ respostas5["Valor"] +'</span></div>';
+    /*                
+      let options = 
+         `<span> ${respostas1["Valor"]}
+          <span> ${respostas1["Valor"]}
+          <span> ${respostas1["Valor"]}
+          <span> ${respostas1["Valor"]}
+          <span> ${respostas["Valor"]}
+         `
+     */
+      let options = `<div class="option"><span id="value1">${respostas1["Valor"]}</span></div>`
+      + `<div class="option"><span id="value2">${respostas2["Valor"]}</span></div>`
+      + `<div class="option"><span id="value3">${respostas3["Valor"]}</span></div>`
+      + `<div class="option"><span id="value4">${respostas4["Valor"]}</span></div>`
+      + `<div class="option"><span id="value5">${respostas5["Valor"]}</span></div>`;
+      
       option_list.innerHTML = options; //adding new div tag inside option_tag
       
       const option = option_list.querySelectorAll(".option");
       // set onclick attribute to all available options
       for(i=0; i < option.length; i++){
+        console.log(option.values)
           option[i].setAttribute("onclick", "optionSelected(this)");
       }
 
@@ -157,15 +164,25 @@ function showQuetions(){
 let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
 let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
 
-function optionSelected(){
-    let userAns = document.querySelector(".option"); //getting user selected option
-    const allOptions = option_list.children.length; //getting all option items
+function optionSelected(answer){
+    let userAns = answer.textContent; //getting user selected option
+    const allOptions = option_list.children; //getting all option items
     
-        
+    if(userAns){ //if user selected option is equal to array's correct answer
+      console.log(userAns.index)
+        answer.classList.add("correct"); //adding green color to correct selected option
+        answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option    
+        for(i=0; i < allOptions; i++){
+            if(option_list.children[i].textContent){ //if there is an option which is matched to an array answer 
+                option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
+            }
+        }
+      }
+   
         console.log(userAns)
         //console.log(allOptions)
            
-            //answer.insertAdjacentHTML("beforeend", tickIconTag);
+            
 
         
         //answer.classList.add("correct"); //adding green color to correct selected option
@@ -175,8 +192,8 @@ function optionSelected(){
         //answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
     
     for(i=0; i < allOptions; i++){
-        //option_list.children[i].classList.add() //once user select an option then disabled all options
-    }
+        //option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+   
     if(nquestao !== 32)
     {
       next_btn.classList.add("show");;
@@ -185,4 +202,5 @@ function optionSelected(){
     else{
       finish_btn.classList.add("show");
     }
+}
 }
