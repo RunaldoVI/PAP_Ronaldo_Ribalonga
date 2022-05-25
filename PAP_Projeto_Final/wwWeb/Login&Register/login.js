@@ -42,6 +42,7 @@ formLogin.addEventListener("submit", (ev) => {
     postData("https://localhost:5001/api/auth/login", {
       Username: usernameInputLogin.value,
       Password: passwordInputLogin.value,
+
     }
     ).then((data) => {
       
@@ -57,6 +58,12 @@ formLogin.addEventListener("submit", (ev) => {
       }
       else
       {
+        
+        
+        const UserIDStore = {UserID: data.UserID}
+        const myUserIDStore = JSON.stringify(UserIDStore);
+        localStorage.setItem('UserIDStore', myUserIDStore);
+        
         colorGreeen();
         ValidationPopUp('success', `
 

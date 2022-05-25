@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using WebAPIV.Models;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,13 +15,110 @@ namespace WebAPIV.Controllers
     public class AuthController : ControllerBase
     {
 
-        [HttpPost("Respostas")]
-        public IActionResult Respostas([FromBody] Respostas respostas)
+        [HttpPost("Questionarios")]
+        public IActionResult Questionarios([FromBody] Questionario questionario)
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-                var re = conn.Query("Select * from Respostas where PerguntasID = @PerguntasID", respostas);
+                var re = conn.Query("Select * from Questionario where QuestionarioID = @QuestionarioID", questionario);
 
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+        }
+
+
+
+
+        [HttpGet("Questionario")]
+        public IActionResult Questionario()
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("Select * from Questionario");
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+        }
+
+
+        [HttpPut("Respostas")]
+             public IActionResult Respostas([FromBody] Respostas respostas)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("Insert into Respostas values (@Valor, @PerguntasID, @UserID, @GPerguntasID, @QuestionarioID)", respostas);
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+
+        }
+
+
+        [HttpPost("QuesRespondido")]
+        public IActionResult GRespostas([FromBody] QuesRespondido QRespondido)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("Select * from Questionarios_Respondidos where UserID = @UserID", QRespondido);
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+
+        }
+
+        [HttpPut("GRespostas")]
+        public IActionResult GRespostas([FromBody] GRespostas Grespostas)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("Insert into GPR values (@UserID, @GPerguntasID, @Valor)", Grespostas);
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+
+        }
+
+
+
+
+        [HttpPut("QuestionarioRespondido")]
+        public IActionResult QuestionarioRespondido([FromBody] QRespondido Respondido)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+
+                var re = conn.Query("Insert into Questionarios_Respondidos values (@UserID, @QuestionarioID, @Classificacao)", Respondido);
+ 
                 if (re == null)
                 {
                     return NotFound();
@@ -33,11 +131,11 @@ namespace WebAPIV.Controllers
         }
 
         [HttpPost("Perguntas")]
-        public IActionResult Perguntas([FromBody]Perguntas perguntas)
+        public IActionResult Perguntas([FromBody] Perguntas perguntas)
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-               var re = conn.Query("Select * from Perguntas where QuestionarioID = @QuestionarioID",perguntas);
+               var re = conn.Query("Select * from Perguntas where QuestionarioID = @QuestionarioID", perguntas);
                 
                 if (re == null)
                 {
@@ -50,6 +148,63 @@ namespace WebAPIV.Controllers
 
         }
 
+
+        [HttpPost("RespostasSumar")]
+        public IActionResult RespostasSumar([FromBody] RespostasSum Respostas)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("Select * from Respostas where UserID = @UserID and QuestionarioID = @QuestionarioID", Respostas);
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+
+        }
+
+        [HttpPost("QuestionarioDetalhes")]
+        public IActionResult QuestionarioDetalhes([FromBody] QuesDetalhes Detalhes)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("select Utilizadores.UserID, Utilizadores.Nome, Questionario.Descricao , Questionarios_Respondidos.Classificacao from Utilizadores JOIN Questionarios_Respondidos on Utilizadores.UserID = Questionarios_Respondidos.UserID JOIN Questionario on Questionario.QuestionarioID = Questionarios_Respondidos.QuestionarioID where Utilizadores.UserID = @UserID", Detalhes);
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+
+        }
+
+        [HttpPost("GPerguntasDetalhes")]
+        public IActionResult GPerguntasDetalhes([FromBody] GPerguntas Detalhes)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("select Questionario.Descricao, GPerguntas.GDescricao , GPR.Valor from Questionario JOIN GPerguntas on Questionario.QuestionarioID = GPerguntas.QuestionarioID JOIN GPR on GPR.GPerguntasID = GPerguntas.GPerguntasID JOIN Utilizadores on Utilizadores.UserID = GPR.UserID where Utilizadores.UserID = @UserID and Questionario.QuestionarioID = @QuestionarioID order by GPerguntas.GPerguntasID", Detalhes);
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+
+        }
+
+
+
         // GET: api/<AuthController>/Login
         [HttpPost("login")]
         //[FromBody]
@@ -57,8 +212,99 @@ namespace WebAPIV.Controllers
         {
             using(var conn = new SqlConnection(Strings.connectionString))
             {
+
                 var res = conn.QueryFirstOrDefault("Select UserID, Username, Nome, Email from Utilizadores where Username=@Username and Password=@Password",user);
                 if(res==null)
+                {
+                    return NotFound();
+                }
+                return Ok(res);
+            }
+        }
+
+        // POST: api/<AuthController>/Users
+        [HttpPost("Users")]
+        //[FromBody]
+        public IActionResult Users([FromBody] UserShow user)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var res = conn.QueryFirstOrDefault("Select Username, Nome, Email from Utilizadores where UserID=@UserID",user);
+                if (res == null)
+                {
+                    return NotFound();
+                }
+                return Ok(res);
+            }
+        }
+
+
+        [HttpPut("User{id}")]
+        //[FromBody]
+        public IActionResult Username(int id,[FromBody] UsernameModel user)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var res = conn.QueryFirstOrDefault("Update Utilizadores SET Username=@Username where UserID="+id, user);
+                if (res != null)
+                {
+                    return NotFound();
+                }
+                return Ok(res);
+            }
+        }
+
+        [HttpPut("Nome{id}")]
+        //[FromBody]
+        public IActionResult Nome(int id, [FromBody] NomeModel user)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var res = conn.QueryFirstOrDefault("Update Utilizadores SET  Nome=@Nome  where UserID=" + id, user);
+                if (res != null)
+                {
+                    return NotFound();
+                }
+                return Ok(res);
+            }
+        }
+        [HttpPut("Password{id}")]
+        //[FromBody]
+        public IActionResult Password(int id, [FromBody] PasswordModel user)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var res = conn.QueryFirstOrDefault("Update Utilizadores SET  Password=@Password  where UserID=" + id, user);
+                if (res != null)
+                {
+                    return NotFound();
+                }
+                return Ok(res);
+            }
+        }
+
+        [HttpPut("Email{id}")]
+        //[FromBody]
+        public IActionResult Email(int id, [FromBody] EmailModel user)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var res = conn.QueryFirstOrDefault("Update Utilizadores SET Email=@Email where UserID=" + id, user);
+                if (res != null)
+                {
+                    return NotFound();
+                }
+                return Ok(res);
+            }
+        }
+        [HttpDelete("UserDelete")]
+        //[FromBody]
+        public IActionResult UserDelete([FromBody] UserShow user)
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var res = conn.QueryFirstOrDefault("Delete From Utilizadores where UserID=@UserID", user);
+                if (res != null)
                 {
                     return NotFound();
                 }
