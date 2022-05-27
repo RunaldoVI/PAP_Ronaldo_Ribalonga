@@ -6,24 +6,28 @@ const questionEl = document.getElementById("question");
 const submitBtn = document.getElementById("submit");
 const finishBtn = document.getElementById("Finish");
 
-const groupOrganizer = (item) => {
-  let groupIndex = classificationsByAnswerGroup.findIndex((group) => {
-    return group.GPerguntasID === item.GPerguntasID;
-  });
-  console.log(item);
-  console.log(classificationsByAnswerGroup);
-  if (groupIndex < 0) {
-    classificationsByAnswerGroup = [
-      ...classificationsByAnswerGroup,
-      { GPerguntasID: item.GPerguntasID, Valor: item.Valor },
-    ];
-    // nao chega a fazer nada aqui
-  } else {
-    classificationsByAnswerGroup[groupIndex].Valor += item.Valor; //Soma e mete os dados no gpr
-  }
+const QuestionarioID2 = localStorage.getItem("QuestionarioIDStore");
+const MyQuestionarioID2 = JSON.parse(QuestionarioID2);
 
-  //console.log(groupIndex)
-};
+const groupOrganizer = (items) => {
+  items.map(item => {
+    let groupIndex = classificationsByAnswerGroup.findIndex((group) => {
+      return group.GPerguntasID === item.GPerguntasID;
+    });
+    console.log(item);
+    console.log(classificationsByAnswerGroup);
+    if (groupIndex < 0) {
+      classificationsByAnswerGroup = [
+        ...classificationsByAnswerGroup,
+        { GPerguntasID: item.GPerguntasID, Valor: item.Valor },
+      ];
+      // nao chega a fazer nada aqui
+    } else {
+      classificationsByAnswerGroup[groupIndex].Valor += item.Valor; //Soma e mete os dados no gpr
+    }   
+    //console.log(groupIndex)
+  })
+  };
 
 finishBtn.style.display = "none";
 let classificationsByAnswerGroup = [];
@@ -51,9 +55,9 @@ async function putQuestionarioRespondido(urlQRespondido, QRdata) {
   return response.json();
 }
 
-async function putGPRespostas(urlGPRespostas, GPData) {
+function putGPRespostas(urlGPRespostas, GPData) {
   // Default options are marked with *
-  const response = await fetch(urlGPRespostas, {
+  return fetch(urlGPRespostas, {
     method: "PUT", // *GET, POST, PUT, DELETE, etc.
     headers: {
       "Content-Type": "application/json",
@@ -61,7 +65,6 @@ async function putGPRespostas(urlGPRespostas, GPData) {
     },
     body: JSON.stringify(GPData),
   });
-  return response.json();
 }
 
 async function postQuestionarioRespondido(urlQRespondido, QRdata) {
@@ -123,11 +126,6 @@ function loadQuiz() {
     QuestionarioID: MyQuestionarioID2.QuestionarioID,
   }).then((dataPerguntas) => {
     console.log(dataPerguntas[ines]);
-    if (!dataPerguntas[ines]) {
-      finishBtn.style.display = "block";
-      submitBtn.style.display = "none";
-      return;
-    }
 
     dat = dataPerguntas[ines];
     mudarNumero.innerText = `Numero: ${nPerguntas}/32`;
@@ -148,8 +146,6 @@ function deselectAnswers() {
   answerEls.forEach((answerEl) => (answerEl.checked = false));
 }
 
-const QuestionarioID2 = localStorage.getItem("QuestionarioIDStore");
-const MyQuestionarioID2 = JSON.parse(QuestionarioID2);
 
 function getSelected() {
   let answer;
@@ -187,31 +183,40 @@ function getSelected() {
 submitBtn.addEventListener("click", () => {
   const answer = getSelected();
   if (answer) {
-    ines++;
-    nPerguntas++;
-  
+    //console.log(perguntaChanger)
+    console.log("das")
 
     //console.log(MyQuestionarioID2.QuestionarioID)
-    postSoma("https://localhost:5001/api/Auth/RespostasSumar", {
-      UserID: myUserIDStore2.UserID,
-      QuestionarioID: MyQuestionarioID2.QuestionarioID,
-    }).then((data) => {
-    console.log(JSON.stringify(data))
-      groupOrganizer(data[data.length - 1]);
-      let TotalScore = data
+    if(nPerguntas > 31){
+      submitBtn.style.display = "none";
+      postSoma("https://localhost:5001/api/Auth/RespostasSumar", {
+        UserID: myUserIDStore2.UserID,
+        QuestionarioID: MyQuestionarioID2.QuestionarioID,
+      }).then((data) => {
+        console.log(data)
+        console.log(data.length)
+        groupOrganizer(data);
+        let TotalScore = data
         .map((resposta) => {
           return resposta.Valor;
         })
         .reduce((previousValue, currentValue) => {
           return previousValue + currentValue;
         });
-      //console.log(TotalScore);
-
-      percentScore = (TotalScore / 128) * 100;
-      loadQuiz();
-    }).catch(err =>{
-       console.log(err)
-    })
+        //console.log(TotalScore);
+        
+        percentScore = (TotalScore / 128) * 100;
+        finishBtn.style.display = "block";
+        
+      }).catch(err =>{
+        console.log(err)
+      })
+    }
+    else{
+      ines++;
+      nPerguntas++;
+    }
+    loadQuiz();
   }
   }
 );
@@ -233,18 +238,23 @@ finishBtn.addEventListener("click", () => {
       Data: data,
     }
   );
+   TouFarto(classificationsByAnswerGroup).then(info =>{
+     console.log(info)
+   }).catch(err =>{
+    console.log(err)
+  })
 
-  for (let i = 0; i < classificationsByAnswerGroup.length; i++) {
-    putGPRespostas("https://localhost:5001/api/Auth/GRespostas", {
-      UserID: myUserIDStore2.UserID,
-      GPerguntasID: classificationsByAnswerGroup[i].GPerguntasID,
-      Valor: classificationsByAnswerGroup[i].Valor,
-    });
-  }
-  setInterval(() => {
-
-    window.location.replace("../MenuQuestionario/MenuQuestionario.html");
-  },50000)
+  window.location.replace("../MenuQuestionario/MenuQuestionario.html");
 }); // end finish button
 
 loadQuiz();
+
+function TouFarto(data){
+  return Promise.all(data.map(info => {
+    putGPRespostas("https://localhost:5001/api/Auth/GRespostas", {
+      UserID: myUserIDStore2.UserID,
+      GPerguntasID: info.GPerguntasID,
+      Valor: info.Valor,
+    });
+  }))
+}
