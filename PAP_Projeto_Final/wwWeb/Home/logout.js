@@ -20,4 +20,10 @@ postData("https://localhost:5001/api/Auth/Users", {
 ).then((data)=> {
   document.getElementById("Nome").innerHTML =
   "Bom Dia " + data.Username;
+  if(data.IsAdmin === true){
+   document.getElementById("AdminDashboard").style.display = 'block';
+  }
+  else{
+  }
 })
+

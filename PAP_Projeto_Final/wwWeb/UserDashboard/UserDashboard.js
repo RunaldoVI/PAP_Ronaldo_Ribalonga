@@ -43,18 +43,21 @@ postDetalhes("https://localhost:5001/api/Auth/QuestionarioDetalhes", {
   document.getElementById("QuestionarioID1").innerHTML = data[0].UserID;
   document.getElementById("UserNome1").innerHTML = data[0].Nome;
   document.getElementById("QuestionarioNome1").innerHTML = data[0].Descricao;
+  document.getElementById("QuestionarioData1").innerHTML = data[0].Data;
   document.getElementById("QuestionarioClassificacao1").innerHTML =
     data[0].Classificacao + "%";
 
   document.getElementById("QuestionarioID2").innerHTML = data[1].UserID;
   document.getElementById("UserNome2").innerHTML = data[1].Nome;
   document.getElementById("QuestionarioNome2").innerHTML = data[1].Descricao;
+  document.getElementById("QuestionarioData2").innerHTML = data[1].Data;
   document.getElementById("QuestionarioClassificacao2").innerHTML =
     data[1].Classificacao + "%";
 
   document.getElementById("QuestionarioID3").innerHTML = data[2].UserID;
   document.getElementById("UserNome3").innerHTML = data[2].Nome;
   document.getElementById("QuestionarioNome3").innerHTML = data[2].Descricao;
+  document.getElementById("QuestionarioData3").innerHTML = data[2].Data;
   document.getElementById("QuestionarioClassificacao3").innerHTML =
     data[2].Classificacao + "%";
 });

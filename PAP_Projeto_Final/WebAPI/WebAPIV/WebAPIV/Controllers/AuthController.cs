@@ -53,6 +53,24 @@ namespace WebAPIV.Controllers
         }
 
 
+        [HttpGet("AdminQuestionario")]
+        public IActionResult AdminQuestionario()
+        {
+            using (var conn = new SqlConnection(Strings.connectionString))
+            {
+                var re = conn.Query("select Questionarios_Respondidos.UserID,Utilizadores.Nome, Questionarios_Respondidos.Classificacao, Questionarios_Respondidos.Data,Questionario.Descricao,Questionario.QuestionarioID from Questionarios_Respondidos join Questionario on Questionario.QuestionarioID = Questionarios_Respondidos.QuestionarioID join Utilizadores on Utilizadores.UserID = Questionarios_Respondidos.UserID");
+
+                if (re == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(re);
+
+            }
+        }
+
+
         [HttpPut("Respostas")]
              public IActionResult Respostas([FromBody] Respostas respostas)
         {
@@ -117,7 +135,7 @@ namespace WebAPIV.Controllers
             using (var conn = new SqlConnection(Strings.connectionString))
             {
 
-                var re = conn.Query("Insert into Questionarios_Respondidos values (@UserID, @QuestionarioID, @Classificacao)", Respondido);
+                var re = conn.Query("Insert into Questionarios_Respondidos values (@UserID, @QuestionarioID, @Classificacao, @Data)", Respondido);
  
                 if (re == null)
                 {
@@ -172,7 +190,7 @@ namespace WebAPIV.Controllers
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-                var re = conn.Query("select Utilizadores.UserID, Utilizadores.Nome, Questionario.Descricao , Questionarios_Respondidos.Classificacao from Utilizadores JOIN Questionarios_Respondidos on Utilizadores.UserID = Questionarios_Respondidos.UserID JOIN Questionario on Questionario.QuestionarioID = Questionarios_Respondidos.QuestionarioID where Utilizadores.UserID = @UserID", Detalhes);
+                var re = conn.Query("select Utilizadores.UserID, Utilizadores.Nome, Questionario.Descricao , Questionarios_Respondidos.Classificacao , Questionarios_Respondidos.Data from Utilizadores JOIN Questionarios_Respondidos on Utilizadores.UserID = Questionarios_Respondidos.UserID JOIN Questionario on Questionario.QuestionarioID = Questionarios_Respondidos.QuestionarioID where Utilizadores.UserID = @UserID", Detalhes);
 
                 if (re == null)
                 {
@@ -229,7 +247,7 @@ namespace WebAPIV.Controllers
         {
             using (var conn = new SqlConnection(Strings.connectionString))
             {
-                var res = conn.QueryFirstOrDefault("Select Username, Nome, Email from Utilizadores where UserID=@UserID",user);
+                var res = conn.QueryFirstOrDefault("Select Username, Nome, Email, IsAdmin from Utilizadores where UserID=@UserID",user);
                 if (res == null)
                 {
                     return NotFound();

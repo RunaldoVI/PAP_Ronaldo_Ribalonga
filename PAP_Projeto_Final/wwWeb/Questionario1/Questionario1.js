@@ -4,13 +4,32 @@ const myUserIDStore2 = JSON.parse(UserID2);
 const answerEls = document.querySelectorAll(".answer");
 const questionEl = document.getElementById("question");
 const submitBtn = document.getElementById("submit");
-const finishBtn = document.getElementById("Finish")
+const finishBtn = document.getElementById("Finish");
 
-finishBtn.style.display = 'none';
+const groupOrganizer = (item) => {
+  let groupIndex = classificationsByAnswerGroup.findIndex((group) => {
+    return group.GPerguntasID === item.GPerguntasID;
+  });
+  console.log(item);
+  console.log(classificationsByAnswerGroup);
+  if (groupIndex < 0) {
+    classificationsByAnswerGroup = [
+      ...classificationsByAnswerGroup,
+      { GPerguntasID: item.GPerguntasID, Valor: item.Valor },
+    ];
+    // nao chega a fazer nada aqui
+  } else {
+    classificationsByAnswerGroup[groupIndex].Valor += item.Valor; //Soma e mete os dados no gpr
+  }
 
-var ines = 0;
+  //console.log(groupIndex)
+};
+
+finishBtn.style.display = "none";
+let classificationsByAnswerGroup = [];
+var ines = 0; // max 31
 let score = 0;
-nPerguntas = 1;
+nPerguntas = 1; // max 31
 timesCount = 1;
 perguntaChanger = 1;
 //let TotalScore = 0;
@@ -45,8 +64,6 @@ async function putGPRespostas(urlGPRespostas, GPData) {
   return response.json();
 }
 
-
-
 async function postQuestionarioRespondido(urlQRespondido, QRdata) {
   // Default options are marked with *
   const response = await fetch(urlQRespondido, {
@@ -59,7 +76,6 @@ async function postQuestionarioRespondido(urlQRespondido, QRdata) {
   });
   return response.json();
 }
-
 
 async function postSoma(urlSoma, data) {
   // Default options are marked with *
@@ -106,6 +122,13 @@ function loadQuiz() {
   postPerguntas("https://localhost:5001/api/Auth/Perguntas", {
     QuestionarioID: MyQuestionarioID2.QuestionarioID,
   }).then((dataPerguntas) => {
+    console.log(dataPerguntas[ines]);
+    if (!dataPerguntas[ines]) {
+      finishBtn.style.display = "block";
+      submitBtn.style.display = "none";
+      return;
+    }
+
     dat = dataPerguntas[ines];
     mudarNumero.innerText = `Numero: ${nPerguntas}/32`;
     questionEl.innerText = dat.Descricao;
@@ -154,7 +177,7 @@ function getSelected() {
         PerguntasID: MyPerguntaID2.PerguntasID,
         UserID: myUserIDStore2.UserID,
         GPerguntasID: MyGPerguntaID2.GPerguntasID,
-        QuestionarioID: MyQuestionarioID2.QuestionarioID
+        QuestionarioID: MyQuestionarioID2.QuestionarioID,
       });
     }
   });
@@ -166,107 +189,62 @@ submitBtn.addEventListener("click", () => {
   if (answer) {
     ines++;
     nPerguntas++;
-    //console.log(perguntaChanger)
-
-  //console.log(MyQuestionarioID2.QuestionarioID)
-  postSoma("https://localhost:5001/api/Auth/RespostasSumar", {
-  UserID: myUserIDStore2.UserID,
-  QuestionarioID: MyQuestionarioID2.QuestionarioID
-}).then((data) => {
   
-//console.log(data)
 
-let classificationsByAnswerGroup = [];
-
-  let groupOrganizer = (item) => {
-    let groupIndex = classificationsByAnswerGroup.findIndex((group) => {
-      return group.GPerguntasID === item.GPerguntasID; 
-    });
-
-    if (groupIndex < 0) {
-      console.log("bas")
-      classificationsByAnswerGroup = [
-        ...classificationsByAnswerGroup,
-        { GPerguntasID: item.GPerguntasID, Valor: item.Valor },
-      ];
-      // nao chega a fazer nada aqui 
-    }
-    else {
-      console.log("das")
-       classificationsByAnswerGroup[groupIndex].Valor += item.Valor; //Soma e mete os dados no gpr
-    }
-    console.log(groupIndex)
-    
-    //console.log(groupIndex)
-  };
-
-
-  let TotalScore = data
-  .map((resposta) => {
-    groupOrganizer(resposta);
-    return resposta.Valor;
-    })
-    .reduce((previousValue, currentValue) => {
-      return previousValue + currentValue;
-    });
-
-
-  
-  if(nPerguntas > 31)
-  {
-    finishBtn.style.display = 'block';
-    submitBtn.style.display = 'none';
-
-      
+    //console.log(MyQuestionarioID2.QuestionarioID)
+    postSoma("https://localhost:5001/api/Auth/RespostasSumar", {
+      UserID: myUserIDStore2.UserID,
+      QuestionarioID: MyQuestionarioID2.QuestionarioID,
+    }).then((data) => {
+    console.log(JSON.stringify(data))
+      groupOrganizer(data[data.length - 1]);
+      let TotalScore = data
+        .map((resposta) => {
+          return resposta.Valor;
+        })
+        .reduce((previousValue, currentValue) => {
+          return previousValue + currentValue;
+        });
+      //console.log(TotalScore);
 
       percentScore = (TotalScore / 128) * 100;
-      
-      
-   
-  
+      loadQuiz();
+    }).catch(err =>{
+       console.log(err)
+    })
+  }
+  }
+);
 
-finishBtn.addEventListener("click", () =>{
+finishBtn.addEventListener("click", () => {
+  let today = new Date();
+  let day = `${today.getDate() < 10 ? "0" : ""}${today.getDate()}`;
+  let month = `${today.getMonth() + 1 < 10 ? "0" : ""}${today.getMonth() + 1}`;
+  let year = today.getFullYear();
 
-
-
-
+  data = `${day}/${month}/${year}`;
 
   putQuestionarioRespondido(
     "https://localhost:5001/api/Auth/QuestionarioRespondido",
     {
       UserID: myUserIDStore2.UserID,
       QuestionarioID: MyQuestionarioID2.QuestionarioID,
-      Classificacao: percentScore
+      Classificacao: percentScore,
+      Data: data,
     }
   );
-  
-    
-    for (let i = 0; i < classificationsByAnswerGroup.length; i++) {
-      putGPRespostas("https://localhost:5001/api/Auth/GRespostas", {
-        UserID: myUserIDStore2.UserID,
-        GPerguntasID: classificationsByAnswerGroup[i].GPerguntasID,
-        Valor: classificationsByAnswerGroup[i].Valor,
-      });
-    }
-     setTimeout(()=>{
 
-       window.location.replace('../MenuQuestionario/MenuQuestionario.html');
-     },5000);
-
-})
-
-  
-
-  
-}
-
-
-});
-loadQuiz();
+  for (let i = 0; i < classificationsByAnswerGroup.length; i++) {
+    putGPRespostas("https://localhost:5001/api/Auth/GRespostas", {
+      UserID: myUserIDStore2.UserID,
+      GPerguntasID: classificationsByAnswerGroup[i].GPerguntasID,
+      Valor: classificationsByAnswerGroup[i].Valor,
+    });
   }
-});
+  setInterval(() => {
 
-
-
+    window.location.replace("../MenuQuestionario/MenuQuestionario.html");
+  },50000)
+}); // end finish button
 
 loadQuiz();
