@@ -6,17 +6,26 @@
   box-sizing: border-box;
 }
 
+.NavBarRound{
+  border-radius: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
 body,
 input {
   font-family: "Poppins", sans-serif;
 }
 
-.container {
+.ContainerRegisterLogin {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  background-color: #d5e8df;
   min-height: 100vh;
   overflow: hidden;
+}
+
+.ButtonChangeScreen{
+  border: none !important;
 }
 
 .forms-container {
@@ -103,7 +112,7 @@ form.sign-in-form {
   font-weight: 500;
 }
 
-.btn {
+.ButtonSubmit {
   width: 150px;
   background-color: #38d39f;
   border: none;
@@ -118,10 +127,10 @@ form.sign-in-form {
   transition: 0.5s;
 }
 
-.btn:hover {
+.ButtonSubmit:hover {
   background-color: #38d39f;
 }
-.panels-container {
+.PainelContainer {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -131,7 +140,7 @@ form.sign-in-form {
   grid-template-columns: repeat(2, 1fr);
 }
 
-.container:before {
+.ContainerRegisterLogin:before {
   content: "";
   position: absolute;
   height: 2000px;
@@ -151,7 +160,7 @@ form.sign-in-form {
   transition-delay: 0.4s;
 }
 
-.panel {
+.Painel {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -160,92 +169,92 @@ form.sign-in-form {
   z-index: 6;
 }
 
-.left-panel {
+.LeftPainel {
   pointer-events: all;
   padding: 3rem 17% 2rem 12%;
 }
 
-.right-panel {
+.RightPainel {
   pointer-events: none;
   padding: 3rem 12% 2rem 17%;
 }
 
-.panel .content {
+.Painel .content {
   color: #fff;
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
 }
 
-.panel h3 {
+.Painel h3 {
   font-weight: 600;
   line-height: 1;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 }
 
-.panel p {
-  font-size: 0.95rem;
+.Painel p {
+  font-size: 1.2rem;
   padding: 0.7rem 0;
 }
 
-.btn.transparent {
+.ButtonChangeScreen {
   margin: 0;
   background: none;
   border: 2px solid #fff;
-  width: 130px;
+  width: 130px !important;
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
 }
 
 /* Começa a animação e ajustes */
-.right-panel .image,
-.right-panel .content {
+.RightPainel .image,
+.RightPainel .content {
   transform: translateX(800px);
 }
 
 
 
-.container.sign-up-mode:before {
+.ContainerRegisterLogin.sign-up-mode:before {
   transform: translate(100%, -50%);
   right: 52%;
 }
 
-.container.sign-up-mode .left-panel .image,
-.container.sign-up-mode .left-panel .content {
+.ContainerRegisterLogin.sign-up-mode .LeftPainel .image,
+.ContainerRegisterLogin.sign-up-mode .LeftPainel .content {
   transform: translateX(-800px);
 }
 
-.container.sign-up-mode .signin-signup {
+.ContainerRegisterLogin.sign-up-mode .signin-signup {
   left: 25%;
 }
 
-.container.sign-up-mode form.sign-up-form {
+.ContainerRegisterLogin.sign-up-mode form.sign-up-form {
   opacity: 1;
   z-index: 2;
 }
 
-.container.sign-up-mode form.sign-in-form {
+.ContainerRegisterLogin.sign-up-mode form.sign-in-form {
   opacity: 0;
   z-index: 1;
 }
 
-.container.sign-up-mode .right-panel .image,
-.container.sign-up-mode .right-panel .content {
+.ContainerRegisterLogin.sign-up-mode .RightPainel .image,
+.ContainerRegisterLogin.sign-up-mode .RightPainel .content {
   transform: translateX(0%);
 }
 
-.container.sign-up-mode .left-panel {
+.ContainerRegisterLogin.sign-up-mode .LeftPainel {
   pointer-events: none;
 }
 
-.container.sign-up-mode .right-panel {
+.ContainerRegisterLogin.sign-up-mode .RightPainel {
   pointer-events: all;
 }
 
 /* Acaba a animação */
 
 @media (max-width: 870px) {
-  .container {
+  .ContainerRegisterLogin {
     min-height: 800px;
     height: 100vh;
   }
@@ -257,16 +266,16 @@ form.sign-in-form {
   }
 
   .signin-signup,
-  .container.sign-up-mode .signin-signup {
+  .ContainerRegisterLogin.sign-up-mode .signin-signup {
     left: 50%;
   }
 
-  .panels-container {
+  .PainelContainer {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 2fr 1fr;
   }
 
-  .panel {
+  .Painel {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
@@ -274,11 +283,11 @@ form.sign-in-form {
     grid-column: 1 / 2;
   }
 
-  .right-panel {
+  .RightPainel {
     grid-row: 3 / 4;
   }
 
-  .left-panel {
+  .LeftPainel {
     grid-row: 1 / 2;
   }
 
@@ -288,28 +297,28 @@ form.sign-in-form {
     transition-delay: 0.6s;
   }
 
-  .panel .content {
+  .Painel .content {
     padding-right: 15%;
     transition: transform 0.9s ease-in-out;
     transition-delay: 0.8s;
   }
 
-  .panel h3 {
+  .Painel h3 {
     font-size: 1.2rem;
   }
 
-  .panel p {
+  .Painel p {
     font-size: 0.7rem;
     padding: 0.5rem 0;
   }
 
-  .btn.transparent {
+  .ButtonChangeScreen {
     width: 110px;
     height: 35px;
     font-size: 0.7rem;
   }
 
-  .container:before {
+  .ContainerRegisterLogin:before {
     width: 1500px;
     height: 1500px;
     transform: translateX(-50%);
@@ -320,28 +329,28 @@ form.sign-in-form {
     transition: 2s ease-in-out;
   }
 
-  .container.sign-up-mode:before {
+  .ContainerRegisterLogin.sign-up-mode:before {
     transform: translate(-50%, 100%);
     bottom: 32%;
     right: initial;
   }
-
-  .container.sign-up-mode .left-panel .image,
-  .container.sign-up-mode .left-panel .content {
+ContainerRegisterLogin
+  .ContainerRegisterLogin.sign-up-mode .LeftPainel .image,
+  .ContainerRegisterLogin.sign-up-mode .LeftPainel .content {
     transform: translateY(-300px);
   }
 
-  .container.sign-up-mode .right-panel .image,
-  .container.sign-up-mode .right-panel .content {
+  .ContainerRegisterLogin.sign-up-mode .RightPainel .image,
+  .ContainerRegisterLogin.sign-up-mode .RightPainel .content {
     transform: translateY(0px);
   }
 
-  .right-panel .image,
-  .right-panel .content {
+  .RightPainel .image,
+  .RightPainel .content {
     transform: translateY(300px);
   }
 
-  .container.sign-up-mode .signin-signup {
+  .ContainerRegisterLogin.sign-up-mode .signin-signup {
     top: 5%;
     transform: translate(-50%, 0);
   }
@@ -355,19 +364,19 @@ form.sign-in-form {
   .image {
     display: none;
   }
-  .panel .content {
+  .Painel .content {
     padding: 0.5rem 1rem;
   }
-  .container {
+  .ContainerRegisterLogin {
     padding: 1.5rem;
   }
 
-  .container:before {
+  .ContainerRegisterLogin:before {
     bottom: 72%;
     left: 50%;
   }
 
-  .container.sign-up-mode:before {
+  .ContainerRegisterLogin.sign-up-mode:before {
     bottom: 28%;
     left: 50%;
   }

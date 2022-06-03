@@ -5,13 +5,12 @@
     width: 300px;
     display: flex;
     flex-direction: column;
-    z-index: 7;
+    z-index: 1038;
 }
 
 .snackbar{
-
-    padding: 1.5rem 1rem;
-    margin: 0.5rem;
+    padding: 1rem 0.5rem;
+    margin: -1rem;
     width: 500px;
     border-radius: 10px; 
     box-shadow: 2px 2px 5px rgba(0,0,0, 0.7);

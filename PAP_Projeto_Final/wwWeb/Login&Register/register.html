@@ -8,11 +8,54 @@
     <title>Registo&Login</title>
     <link
       rel="stylesheet"
+      href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/wtf-forms.css"
+    />  
+    <link
+      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />  
+
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+    crossorigin="anonymous"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+    crossorigin="anonymous"
+  />
+  <link
+    href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    id="bootstrap-css"
+  />
+  <script
+    src="https://kit.fontawesome.com/a1fa6197c0.js"
+    crossorigin="anonymous"
+  ></script>
+
   </head>
   <body>
-    <div class="container"> <!-- Container -->
+
+
+    <nav class="navbar NavBarRound col-lg-11 mx-auto fixed-bottom m-4 navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div id="NavBarActive" class="navbar-nav mx-auto nav-fill">  
+         <button class="ButtonChangeScreen nav-item nav-link" id="sign-up-btn">Registo</button>
+          <button class="ButtonChangeScreen nav-item nav-link mx-lg-5 active" id="sign-in-btn">Login</button>    
+        </div>
+      </div>
+    </nav>
+
+
+    
+    <div class="ContainerRegisterLogin"> <!-- Container -->
       <div class="forms-container">
         <section id="PopUp-container">
         </section>
@@ -29,7 +72,7 @@
               <i class="fas fa-lock"></i>
               <input type="password" id="loginPassword" placeholder="Password" required/>
             </div>
-            <input type="submit" value="Login" id="LoginBtn" class="btn solid"/>
+            <input type="submit" value="Login" id="LoginBtn" class="ButtonSubmit"/>
           </form>
           <!-- Login Form -->
 
@@ -52,7 +95,7 @@
               <i class="fas fa-lock"></i>
               <input type="password" id="registoPassword" placeholder="Password" required />
             </div>
-            <input type="submit" class="btn" value="Registo" id="registo" />
+            <input type="submit" class="ButtonSubmit" value="Registo" id="registo" />
           </form>  
           <!-- Registo Form -->
 
@@ -60,24 +103,22 @@
       </div> <!-- Form Container -->
 
       <!-- Painel de controlo total Div -->
-    <div class="panels-container"> 
+    <div class="PainelContainer"> 
       <!-- Painel de controlo Esquerdo/Registo Div -->
-        <div class="panel left-panel">
+        <div class="Painel LeftPainel">
           <div class="content">
-            <h3>Olá Amigo!</h3>
-            <p>Novo no Skill Up? Então porque não crias um registo? :)</p>
-            <button class="btn transparent" id="sign-up-btn">Registo</button>
+            <h3>Bom Dia!</h3>
+            <p>Bem-Vindo de volta, espero que estejas a ter um ótimo dia.</p>
           </div>
           <img src="..\img/bg.png" class="image" alt="" />
         </div>
         <!-- Painel de controlo Esquerdo/Registo Div -->
 
         <!-- Painel de controlo direita/Registo Div -->
-        <div class="panel right-panel">
+        <div class="Painel RightPainel">
           <div class="content">
-            <h3>Parte da familia?</h3>
-            <p>Bem-Vindo de volta, Espero que estejas a ter um otimo dia.</p>
-            <button class="btn transparent" id="sign-in-btn">Login</button>
+            <h3>Olá Amigo!</h3>
+            <p>Novo no Skill Up? Então porque não crias um registo? :)</p>
           </div>
           <img src="..\img/bg.png" class="image" alt="" />
         </div>
@@ -89,17 +130,36 @@
     <script>
       const sign_in_btn = document.querySelector("#sign-in-btn");
       const sign_up_btn = document.querySelector("#sign-up-btn");
-      const container = document.querySelector(".container");
+      const container = document.querySelector(".ContainerRegisterLogin");
 
       sign_up_btn.addEventListener("click", () => {
         container.classList.add("sign-up-mode");
+        sign_up_btn.classList.add("active")
+        sign_in_btn.classList.remove("active")
       });
 
       sign_in_btn.addEventListener("click", () => {
         container.classList.remove("sign-up-mode");
+        sign_in_btn.classList.add("active")
+        sign_up_btn.classList.remove("active")
       });
     </script>
     <script src="login.js"></script>
     <script src="register.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
   </body>
 </html>

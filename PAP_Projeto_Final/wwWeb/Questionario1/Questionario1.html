@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="Questionario1.css"/>
+    <link rel="stylesheet" href="AnimatedBackground.css"/>
 </head>
 <body>
+    <div class='ripple-background'>
+        <div class='circle xxlarge shade1'></div>
+        <div class='circle xlarge shade2'></div>
+        <div class='circle large shade3'></div>
+        <div class='circle mediun shade4'></div>
+        <div class='circle small shade5'></div>
+      </div>
     <div class="quiz-container" id="quiz">
         <div class="quiz-header">
           <h2 id="nPerguntas"></h2>
           <h2 id="question">Question Text</h2>      
           </div>
 
-          <section class="radio-section">
+          <section class="radio-section" id="lista">
 
             <div class="radio-list">
                 <div class="radio-item0">
@@ -44,6 +52,7 @@
       </div>
 
 
-      <script src="Questionario1.js"></script>
+<script src="../Bypass.js"></script>
+<script src="Questionario1.js"></script>
 </body>
 </html>

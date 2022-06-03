@@ -1,3 +1,65 @@
-.card-body{
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+.NavBarRound{
+  border-radius: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.card{
+    border-radius: 10px !important;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1) !important;
+    background: rgba(213, 232, 223, 0.9) !important;
+}
+
+.form-inline{
+    float: right !important;
+}
+
+.table-responsive{
+    background: rgba(213, 232, 223, 1);
+    border-radius: 10px;
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+
+#tabela{
+    background: rgba(52, 175, 109, 0.3);
+    font-weight: bold;
+}
+
+.btn-primary{
+    color: black !important;
+    background: transparent !important;
+    border: 1px solid #2F4858 !important;
+    cursor: pointer !important;
+    border-radius: 10px !important;
+}
+
+.btn-primary:hover{
+    background: #4AD489 !important;
+    color: #fff !important;
+    transition: 0.5s !important;
+}
+
+.btn-outline-dark{
+    color: black !important;
+    background: transparent !important;
+    border: 1px solid #2F4858 !important;
+    cursor: pointer !important;
+    border-radius: 10px !important;
+}
+
+.btn-outline-dark:hover{
+    background: #4AD489 !important;
+    color: #fff !important;
+    transition: 0.5s !important;
+}
+
+.modal-content{
+    background: rgba(213, 232, 223, 0.9) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1) !important;
+}
+
+.table{
+    margin-bottom: 5rem !important;
 }

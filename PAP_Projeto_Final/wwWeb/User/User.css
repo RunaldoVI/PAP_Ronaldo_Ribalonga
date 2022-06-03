@@ -1,146 +1,196 @@
-body{
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap");
+
+
+.NavBarRound{
+  border-radius: 20px;
+  font-family: "Poppins", sans-serif;
 }
-.emp-profile{
-    padding: 3%;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    border-radius: 0.5rem;
-    background: #fff;
+
+.BorderUser{
+    background: rgba(213, 232, 223, 0.85);
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
 }
-.profile-img{
-    text-align: center;
+
+.FormUser, .circles{
+    min-height: 100%;
 }
-.profile-img img{
-    width: 70%;
-    height: 100%;
+
+.FormContainer{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.profile-img .file {
-    position: relative;
-    overflow: hidden;
-    margin-top: -20%;
-    width: 70%;
-    border: none;
-    border-radius: 0;
-    font-size: 15px;
-    background: #212529b8;
-}
-.profile-img .file input {
+
+.circles{
     position: absolute;
-    opacity: 0;
-    right: 0;
-    top: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: #319279;
 }
 
-.profile-head h5{
-    color: #333;
-}
-.profile-head h6{
-    color: #0062cc;
-}
-.profile-edit-Username-btn{
-  background-color: #0062cc;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  margin-left: 10%;
-  cursor: pointer;
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
 }
 
-.profile-edit-Nome-btn{
-    background-color: #0062cc;
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+.circles li:nth-child(11){
+    left: 55%;
+    width: 130px;
+    height: 50px;
+    animation-delay: 0s;
+    animation-duration: 13s;
+}
+
+.circles li:nth-child(12){
+    left: 25%;
+    width: 140px;
+    height: 70px;
+    animation-delay: 0s;
+    animation-duration: 16s;
+}
+
+.circles li:nth-child(13){
+    left: 5%;
+    width: 180px;
+    height: 100px;
+    animation-delay: 0s;
+    animation-duration: 14s;
+}
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+
+
+input[type="text"] , input[type="email"], input[type="password"]{
     border: none;
+    border-radius: 15px;
     color: white;
-    padding: 5px 10px;
-    margin-left: 10%;
-    cursor: pointer;
+    background-color: #2F4858;
 }
 
-
-.profile-edit-Email-btn{
-    background-color: #0062cc;
+input[type="text"]:read-only , input[type="email"]:read-only, input[type="password"]:read-only{
     border: none;
+    border-radius: 15px;
     color: white;
-    padding: 5px 10px;
-    margin-left: 10%;
-    cursor: pointer;
+    background-color: #2F4858;
 }
 
-.profile-edit-Password-btn{
-    background-color: #0062cc;
+input[type="text"]:focus , input[type="email"]:focus, input[type="password"]:focus{
     border: none;
+    border-radius: 15px;
     color: white;
-    padding: 5px 10px;
-    margin-left: 10%;
-    cursor: pointer;
+    background-color: #527C97;
 }
 
-.proile-rating{
-    font-size: 12px;
-    color: #818182;
+.FormMargin{
+    margin-top: 3%;
+}
+
+.FormTitle{
     margin-top: 5%;
 }
-.proile-rating span{
-    color: #495057;
-    font-size: 15px;
-    font-weight: 600;
-}
-.profile-head .nav-tabs{
-    margin-bottom:5%;
-}
-.profile-head .nav-tabs .nav-link{
-    font-weight:600;
-    border: none;
-}
-.profile-head .nav-tabs .nav-link.active{
-    border: none;
-    border-bottom:2px solid #0062cc;
-}
-.profile-work{
-    padding: 14%;
-    margin-top: -15%;
-}
-.profile-work p{
-    font-size: 12px;
-    color: #818182;
-    font-weight: 600;
-    margin-top: 10%;
-}
-.profile-work a{
-    text-decoration: none;
-    color: #495057;
-    font-weight: 600;
-    font-size: 14px;
-}
-.profile-work ul{
-    list-style: none;
-}
-.profile-tab label{
-    font-weight: 600;
-}
-.profile-tab p{
-    font-weight: 600;
-    color: #0062cc;
-}
 
-#Username, #Email, #Nome, #Password {
-    font-weight: 600;
-    color: #0062cc;
+#Atualizar, #Confirmar, #AtualizarPassword {
+    background-color: #2F4858;
+    border-color: #2F4858;
 }
-
-.row{
-    margin-top: 1%;
-}
-
-  .btn-delete {
-    background-color: red;
-    font-size: 16px;
-    color: white;
-    display: flex;
-    float: right;
-    margin-right: 10%;
-  }
-
-    
-
-  

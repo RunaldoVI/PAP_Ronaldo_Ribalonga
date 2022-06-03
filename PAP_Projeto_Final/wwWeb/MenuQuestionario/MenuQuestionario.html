@@ -4,42 +4,112 @@
     <meta charset="UTF-8">
     <title>Select Menu</title>
     <link rel="stylesheet" href="MenuQuestionario.css"/>
+    <link rel="stylesheet" href="AnimatedBackground.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script
+    src="https://kit.fontawesome.com/a1fa6197c0.js"
+    crossorigin="anonymous"
+  ></script>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-          <div class="box">
-            <div class="content">
+  <nav class="navbar NavBarRound col-lg-11 mx-auto fixed-bottom m-4 navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav mx-auto">
+        <a class="nav-item nav-link" href="../Home/Site.html">Home</a>
+        <a class="nav-item nav-link active" href="../MenuQuestionario/MenuQuestionario.html">Questionário</a>
+        <a class="nav-item nav-link" href="../User/User.html">User</a>
+        <a class="nav-item nav-link" href="../UserDashboard/UserDashboard.html">User Dashboard</a>
+        <a id="AdminBar" style="display: none;" class="nav-item nav-link" href="../AdminDashboard/AdminDashboard.html">Admin Dashboard</a>
+        <a id="AdminUserBar" class="nav-item nav-link" style="display: none;" href="../AdminUserDashboard/AdminUserDashboard.html">Admin User Dashboard</a>
+        <a id="LogOut" class="nav-item nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="area" >
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+</div >
+    <div class="user-container col-12">
+        <div class="user-card">
+          <div class="user-box">
+            <div class="user-content">
               <h2>01</h2>
               <h3>Questionário Um</h3>
               <p id="Descricao1"></p>
-              <button id="Q1">Responder</button>
+              <button id="Q1" data-toggle="modal" data-target="#exampleModalCenter">Responder</button>
             </div>
           </div>
         </div>
-      
-        <div class="card">
-          <div class="box">
-            <div class="content">
+        
+        <div class="user-card">
+          <div class="user-box">
+            <div class="user-content">
               <h2>02</h2>
               <h3>Questionário Dois</h3>
               <p id="Descricao2"></p>
-              <button id="Q2">Responder</button>
+              <button id="Q2" data-toggle="modal" data-target="#exampleModalCenter">Responder</button>
             </div>
           </div>
         </div>
       
-        <div class="card">
-          <div class="box">
-            <div class="content">
+        <div class="user-card">
+          <div class="user-box">
+            <div class="user-content">
               <h2>03</h2>
               <h3>Questionário Três</h3>
               <p id="Descricao3"></p>
-              <button id="Q3">Responder</button>
+              <button id="Q3" data-toggle="modal" data-target="#exampleModalCenter">Responder</button>
             </div>
           </div>
         </div>
       </div>
-      <script src="MenuQuestionario.js"></script>
+      <div class="alert alert-success" id="alert" style="display: none;" role="alert">
+        O seu Questionario foi eliminado com sucesso 
+      </div>
+      
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div id="ModalChange" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Questionário</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <span class="mx-4 my-2">Se já respondeu ao Questionário porfavor clique no botão Eliminar.</span>
+      <span class="mx-4 my-2">Caso nunca tenha respondido ao Questionário porfavor clique no botão Ir Para Questionário</span>
+      <div class="modal-body d-flex justify-content-center">
+        <button type="button" id="ButtonQuestionario" class="btn mr-2 btn-primary">Ir Para Questionario</button>
+        <button type="button" id="ButtonDanger" class="btn ml-2 btn-danger">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</ul>
+
+<script src="../Bypass.js"></script>
+<script src="https://unpkg.com/swup@latest/dist/swup.min.js"></script>  
+<script src="../BarActive.js"></script>
+<script src="MenuQuestionario.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

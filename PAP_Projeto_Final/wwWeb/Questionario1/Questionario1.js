@@ -9,12 +9,14 @@ const finishBtn = document.getElementById("Finish");
 const QuestionarioID2 = localStorage.getItem("QuestionarioIDStore");
 const MyQuestionarioID2 = JSON.parse(QuestionarioID2);
 
+
+console.log(localStorage)
+
 const groupOrganizer = (items) => {
   items.map(item => {
     let groupIndex = classificationsByAnswerGroup.findIndex((group) => {
       return group.GPerguntasID === item.GPerguntasID;
     });
-    console.log(item);
     console.log(classificationsByAnswerGroup);
     if (groupIndex < 0) {
       classificationsByAnswerGroup = [
@@ -125,7 +127,6 @@ function loadQuiz() {
   postPerguntas("https://localhost:5001/api/Auth/Perguntas", {
     QuestionarioID: MyQuestionarioID2.QuestionarioID,
   }).then((dataPerguntas) => {
-    console.log(dataPerguntas[ines]);
 
     dat = dataPerguntas[ines];
     mudarNumero.innerText = `Numero: ${nPerguntas}/32`;
@@ -184,7 +185,6 @@ submitBtn.addEventListener("click", () => {
   const answer = getSelected();
   if (answer) {
     //console.log(perguntaChanger)
-    console.log("das")
 
     //console.log(MyQuestionarioID2.QuestionarioID)
     if(nPerguntas > 31){
@@ -193,8 +193,6 @@ submitBtn.addEventListener("click", () => {
         UserID: myUserIDStore2.UserID,
         QuestionarioID: MyQuestionarioID2.QuestionarioID,
       }).then((data) => {
-        console.log(data)
-        console.log(data.length)
         groupOrganizer(data);
         let TotalScore = data
         .map((resposta) => {
@@ -207,6 +205,9 @@ submitBtn.addEventListener("click", () => {
         
         percentScore = (TotalScore / 128) * 100;
         finishBtn.style.display = "block";
+        document.getElementById("nPerguntas").innerText = "Parabéns chegas-te ao final queres terminar o quiz?";
+        document.getElementById("question").style.display = "none";
+        document.getElementById("lista").style.display = "none";
         
       }).catch(err =>{
         console.log(err)
@@ -221,40 +222,49 @@ submitBtn.addEventListener("click", () => {
   }
 );
 
-finishBtn.addEventListener("click", () => {
-  let today = new Date();
-  let day = `${today.getDate() < 10 ? "0" : ""}${today.getDate()}`;
-  let month = `${today.getMonth() + 1 < 10 ? "0" : ""}${today.getMonth() + 1}`;
-  let year = today.getFullYear();
 
-  data = `${day}/${month}/${year}`;
+  finishBtn.addEventListener("click", () => {
+    let today = new Date();
+    let day = `${today.getDate() < 10 ? "0" : ""}${today.getDate()}`;
+    let month = `${today.getMonth() + 1 < 10 ? "0" : ""}${today.getMonth() + 1}`;
+    let year = today.getFullYear();
+    
+    data = `${day}/${month}/${year}`;
+    QuizAnswer(classificationsByAnswerGroup).then(info =>{
+      console.log(info)
+     }).catch(err =>{
+       console.log(err)
+     })
 
-  putQuestionarioRespondido(
-    "https://localhost:5001/api/Auth/QuestionarioRespondido",
-    {
-      UserID: myUserIDStore2.UserID,
-      QuestionarioID: MyQuestionarioID2.QuestionarioID,
+    putQuestionarioRespondido(
+      "https://localhost:5001/api/Auth/QuestionarioRespondido",
+      {
+        UserID: myUserIDStore2.UserID,
+        QuestionarioID: MyQuestionarioID2.QuestionarioID,
       Classificacao: percentScore,
       Data: data,
     }
-  );
-   TouFarto(classificationsByAnswerGroup).then(info =>{
-     console.log(info)
-   }).catch(err =>{
-    console.log(err)
-  })
+    ).then(()=> {
+      localStorage.removeItem("QuestionarioIDStore");
+      localStorage.removeItem("PerguntasIDStore");
+      localStorage.removeItem("GPerguntasIDStore");
+      window.location.replace("../MenuQuestionario/MenuQuestionario.html");
+    })
 
-  window.location.replace("../MenuQuestionario/MenuQuestionario.html");
-}); // end finish button
+
+
+
+ 
+  }); // end finish button
 
 loadQuiz();
 
-function TouFarto(data){
+function QuizAnswer(data){
   return Promise.all(data.map(info => {
-    putGPRespostas("https://localhost:5001/api/Auth/GRespostas", {
-      UserID: myUserIDStore2.UserID,
-      GPerguntasID: info.GPerguntasID,
-      Valor: info.Valor,
-    });
+        putGPRespostas("https://localhost:5001/api/Auth/GRespostas", {
+          UserID: myUserIDStore2.UserID,
+          GPerguntasID: info.GPerguntasID,
+          Valor: info.Valor,
+        });
   }))
 }

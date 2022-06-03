@@ -1,95 +1,120 @@
 <!DOCTYPE html>
-<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
     <link rel="stylesheet" href="sidebar.css">
-    <!-- Boxicons CDN Link -->
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="AnimatedBackground.css">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+     <script
+     src="https://kit.fontawesome.com/a1fa6197c0.js"
+     crossorigin="anonymous"
+   ></script>
    </head>
 <body>
-  <div class="sidebar">
-    <div class="logo-details">
-      <i class='bx bxl-c-plus-plus icon'></i>
-        <div class="logo_name">Skill Up</div>
-        <i class='bx bx-menu' id="btn" ></i>
-    </div>
-    <ul class="nav-list">
-      <li>
-        <a href="../UserDashboard/UserDashboard.html">
-          <i class='bx bx-grid-alt'></i>
-          <span class="links_name">Dashboard</span>
-        </a>
-         <span class="tooltip">Dashboard</span>
-      </li>
-      <li>
-        <a href="../User/User.html">
-          <i class='bx bx-user' ></i>
-         <span class="links_name">User</span>
-       </a>
-       <span class="tooltip">User</span>
-     </li>
-     <li>
-       <a href="#">
-         <i class='bx bx-folder' ></i>
-         <span class="links_name">File Manager</span>
-       </a>
-       <span class="tooltip">Files</span>
-     </li>
-     <li>
-       <a href="..\MenuQuestionario\MenuQuestionario.html">
-        <i class='bx bx-receipt'></i>
-         <span class="links_name">Questionários</span>
-       </a>
-       <span class="tooltip">Questionários</span>
-     </li>
-     <li id="AdminDashboard">
-      <a href="../AdminDashboard/AdminDashboard.html">
-        <i class='bx bx-book-content'></i>
-        <span class="links_name">Admin Dashboard</span>
-      </a>
-       <span class="tooltip">Admin Dashboard</span>
-    </li>
-     <li>
-       <a href="#">
-         <i class='bx bx-cog' ></i>
-         <span class="links_name">Setting</span>
-       </a>
-       <span class="tooltip">Setting</span>
-     </li>
-     <li class="profile">
-         <a href="..\Login&Register\register.html">
-         <i class='bx bx-log-out' id="log_out" ></i>
-         </a>
-     </li>
-    </ul>
-  </div>
-  <section class="home-section">
-      <div>
-         <h1 id="Nome">Boas</h1>
+  <div class="area" >
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            </ul>
+</div>
+  <nav class="navbar NavBarRound col-lg-11 mx-auto fixed-bottom m-4 navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div id="NavBarActive" class="navbar-nav mx-auto nav-fill">
+        <a class="nav-item nav-link active" href="../Home/Site.html">Home</a>
+        <a class="nav-item nav-link" href="../MenuQuestionario/MenuQuestionario.html">Questionário</a>
+        <a class="nav-item nav-link" href="../User/User.html">User</a>
+        <a class="nav-item nav-link" href="../UserDashboard/UserDashboard.html">User Dashboard</a>
+
+        
+        <a id="AdminBar" class="nav-item nav-link" style="display: none;" style="display: none;" href="../AdminDashboard/AdminDashboard.html">Admin Dashboard</a>
+        <a id="AdminUserBar" class="nav-item nav-link" style="display: none;" href="../AdminUserDashboard/AdminUserDashboard.html">Admin User Dashboard</a>
+        <a id="LogOut" class="nav-item nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
       </div>
-  </section>
-  <script>
-  let sidebar = document.querySelector(".sidebar");
-  let closeBtn = document.querySelector("#btn");
+    </div>
+  </nav>
 
-  closeBtn.addEventListener("click", ()=>{
-    sidebar.classList.toggle("open");
-    menuBtnChange();//calling the function(optional)
-  });
+  <div class="FormWelcome">
+    <div class="FormWelcome2 col-lg-12 p-0 mx-auto d-flex align-items-center justify-content-center">
+    <div class="contaier-fluid col-12">
+      <div class="container Tela col-11">
+      <div class="row col-12 mx-auto d-flex justify-content-center align-items-center">
+        <div class="Titulo">
+          <h1 id="titulo" class="Title mx-auto my-5">Bem-Vindo</h1>
+        </div>
+        <div class="user-container col-12">
+          <div class="user-card">
+            <div class="user-box">
+              <div class="user-content">
+                <h3>Questionário</h3>
+                <p id="Descricao1">Aqui podemos seguir para responder aos Questionários!</p>
+                <button id="Q1">Ir</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="user-card">
+            <div class="user-box">
+              <div class="user-content">
+                <h3>Dashboard</h3>
+                <p id="Descricao2">Após responder aos Questiónarios podemos ir para o Dashboard!</p>
+                <button id="Q2">Ir</button>
+              </div>
+            </div>
+          </div>
+        
+          <div class="user-card">
+            <div class="user-box">
+              <div class="user-content">
+                <h3>User</h3>
+                <p id="Descricao3">E aqui poderemos mudar os dados pessoais do Utilizador!</p>
+                <button id="Q3">Ir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
 
-  // following are the code to change sidebar button(optional)
-  function menuBtnChange() {
-   if(sidebar.classList.contains("open")){
-     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
-   }else {
-     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
-   }
-  }
-  </script>
-  <script src="logout.js"></script>
+
+
+
+<script src="../BarActive.js"></script>
+<script src="../Bypass.js"></script>
+<script src="logout.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
 </body>
 </html>
 
